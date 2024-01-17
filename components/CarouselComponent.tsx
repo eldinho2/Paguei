@@ -32,7 +32,9 @@ export default function CarouselComponent() {
 
 
   const handleClick = () => {
-    api.scrollTo(currentMonth, 0)
+    if (api) {
+      api.scrollTo(currentMonth, false)
+    }
   }
 
 
