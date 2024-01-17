@@ -14,9 +14,9 @@ export default function OverviewCard({
   cardExpenseValue,
 }: OverviewCardProps) {
   return (
-    <Card className="w-80 m-4 shadow-lg">
+    <Card className="w-72 m-4 shadow-lg">
       <CardHeader>
-        <CardTitle>{cardName}</CardTitle>
+        <CardTitle className="text-xl font-semibold">{cardName}</CardTitle>
       </CardHeader>
       <Link href="/receitas">
         <CardContent className="flex items-center">
