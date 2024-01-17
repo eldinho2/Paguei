@@ -1,4 +1,5 @@
 import ValueLabels from "./ui/ValueLabels";
+import OverviewCard from "./OverviewCard";
 
 export default function Main() {
   return (
@@ -10,7 +11,9 @@ export default function Main() {
           <ValueLabels label="Previsto" value="2.000,00" className="transform scale-90 translate-y-0 text-white/70" />
         </div>
       </section>
-      <section></section>
+      <section className="flex justify-center">
+        <OverviewCard cardName="Visão geral" cardIncomeValue="1.424.90" cardExpenseValue="98.90" />
+      </section>
     </main>
   );
 }
