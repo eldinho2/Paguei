@@ -29,22 +29,6 @@ export default function Receitas() {
       <section className="pt-20 w-full flex justify-center items-center bg-[#252628]">
         <CarouselComponent />
       </section>
-      <OverviewCard />
-      <OverviewCard />
-
-      <OverviewCard />
-
-      <OverviewCard />
-
-      <OverviewCard />
-
-      <OverviewCard />
-
-      <OverviewCard />
-
-      <OverviewCard />
-
-      <OverviewCard />
       <PlusCircle className="h-12 w-12 text-white fixed bottom-10 right-10 bg-[#51e15d] rounded-full shadow-lg" />
     </>
   );
