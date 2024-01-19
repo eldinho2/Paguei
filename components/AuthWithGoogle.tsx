@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 export default function AuthWithGoogle() {
   return (
     <button
-      className="flex items-center gap-2"
+      className="flex items-center gap-2 flex-1 justify-center"
       onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
     >
       <span className="w-4 h-4">

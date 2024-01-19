@@ -26,7 +26,7 @@ export default function OverviewCard({
           <div className="flex justify-between w-full">
             <div>Receitas</div>
             <div>
-              <span className="text-black pr-1">R$</span>
+              <span className="dark:text-white/70 pr-1">R$</span>
               {cardIncomeValue}
             </div>
           </div>
@@ -40,7 +40,7 @@ export default function OverviewCard({
           <div className="flex justify-between w-full">
             <div>Despesas</div>
             <div>
-              <span className="text-black pr-1">R$</span>
+              <span className="dark:text-white/70 pr-1">R$</span>
               {cardExpenseValue}
             </div>
           </div>

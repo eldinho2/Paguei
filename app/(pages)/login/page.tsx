@@ -16,7 +16,9 @@ import { Label } from "@/components/ui/label";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import {ModeToggle} from "@/components/ThemeToggle";
+import { ModeToggle } from "@/components/ThemeToggle";
+import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation";
 
 const schema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -33,7 +35,21 @@ type LoginProps = {
 };
 
 export default function Login() {
+  const { data: session, update } = useSession()
+  
+  if (session?.user) {
+    redirect("/dashboard")
+  }
+
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setGoogleLoading] = useState(false);
+  
+  const handleGoogleClick = () => {
+    setGoogleLoading(true);
+    setTimeout(() => {
+      setGoogleLoading(false);
+    }, 3000);
+  };
 
   const {
     register,
@@ -49,9 +65,10 @@ export default function Login() {
     console.log(inputData);
   };
 
-  const Login = ({ method }: LoginProps) => {
+  const LoginForm = ({ method }: LoginProps) => {
     return (
       <Card className="mx-auto bg-black  border-white/20">
+        <div className="flex justify-between items-center pr-4">
         <CardHeader className="space-y-1 text-white">
           <CardTitle className="text-2xl fade-in">
             {method === "signIn" ? "Login" : "Registrar"}
@@ -60,6 +77,8 @@ export default function Login() {
             {method === "signIn" ? "Entre com sua conta" : "Crie uma conta"}
           </CardDescription>
         </CardHeader>
+          <ModeToggle />
+        </div>
         <CardContent className="grid gap-4">
           <div className="flex justify-center items-center">
             <div className="border-b flex-1 border-white/20" />
@@ -68,16 +87,19 @@ export default function Login() {
             </div>
             <div className="border-b flex-1 border-white/20" />
           </div>
-          <div className="text-white flex items-center justify-center border-2 p-2 rounded-sm border-white/50">
-            <AuthWithGoogle />
+          <div onClick={handleGoogleClick} className="text-white flex items-center justify-center border-2 p-2 rounded-sm border-white/50">
+            {isGoogleLoading ? (
+              <Loader className="text-white animate-spin-slow" />
+            ) : (
+              <AuthWithGoogle />
+            )}
           </div>
           <div className="border-b flex-1 pt-2 border-white/20" />
-          <form
-            className="grid gap-2"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form className="grid gap-2" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid gap-2 fade-up ">
-              <Label className="text-white" htmlFor="email">Email</Label>
+              <Label className="text-white" htmlFor="email">
+                Email
+              </Label>
               <Input
                 {...register("email")}
                 id="email"
@@ -90,7 +112,9 @@ export default function Login() {
               )}
             </div>
             <div className="grid gap-2 fade-up ">
-              <Label className="text-white" htmlFor="password">Senha</Label>
+              <Label className="text-white" htmlFor="password">
+                Senha
+              </Label>
               <Input
                 {...register("password")}
                 id="password"
@@ -124,7 +148,6 @@ export default function Login() {
 
   return (
     <Tabs defaultValue="signUp" className="w-[310px]">
-      <ModeToggle />
       <TabsList className="bg-black flex justify-evenly rounded-lg border-2">
         <TabsTrigger className="text-white/50" value="signUp">
           Registrar
@@ -134,10 +157,10 @@ export default function Login() {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="signIn">
-        <Login method="signIn" />
+        <LoginForm method="signIn" />
       </TabsContent>
       <TabsContent value="signUp">
-        <Login method="signUp" />
+        <LoginForm method="signUp" />
       </TabsContent>
     </Tabs>
   );

@@ -1,21 +1,18 @@
-import { auth } from "@/lib/auth"
-import LogoutBtn from "@/components/LogoutBtn"
-import { redirect } from 'next/navigation'
 import Header from '@/components/Header'
 import Main from '@/components/Main'
+import { auth } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
 export default async function Dashboard() {
-
   const session = await auth()
 
   if (!session?.user) {
-    console.log(session);
-    redirect('/dashboard')
+    console.log(session)
+    redirect('/login')
   }
 
   return (
     <div className=''>
-      <LogoutBtn />
       <Header />
       <Main />
     </div>

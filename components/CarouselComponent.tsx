@@ -41,7 +41,7 @@ export default function CarouselComponent() {
   return (
     <Carousel
       setApi={setApi}
-      className="w-20 max-w-sm select-none "
+      className="w-20 max-w-sm select-none"
       opts={{
         startIndex: currentMonth,
       }}
@@ -60,8 +60,8 @@ export default function CarouselComponent() {
         ))}
       </CarouselContent>
       <div onClick={handleClick} className="absolute inset-0 bg-transparent"></div>
-      <CarouselPrevious variant='ghost' className=" text-white border-none h-6 w-6 hover:bg-transparent active:bg-white/65 hover:text-white" />
-      <CarouselNext variant='ghost' className=" text-white border-none h-6 w-6 hover:bg-transparent active:bg-white/65 hover:text-white" />
+      <CarouselPrevious variant='ghost' className=" text-white border-none h-6  hover:bg-transparent active:bg-white/65 hover:text-white" />
+      <CarouselNext variant='ghost' className=" text-white border-none h-6  hover:bg-transparent active:bg-white/65 hover:text-white" />
     </Carousel>
   )
 }
