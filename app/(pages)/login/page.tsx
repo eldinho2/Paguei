@@ -1,6 +1,7 @@
 "use client";
 import { Loader } from "lucide-react";
 import AuthWithGoogle from "@/components/AuthWithGoogle";
+import AuthWithMicrosoft from "@/components/AuthWithMicrosoft";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import * as React from "react";
 import { useState } from "react";
@@ -99,7 +100,7 @@ export default function Login() {
             {isGoogleLoading ? (
               <Loader className="text-white animate-spin-slow" />
             ) : (
-              <AuthWithGoogle />
+              <AuthWithMicrosoft />
             )}
           </div>
         </CardContent>
