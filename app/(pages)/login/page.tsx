@@ -63,7 +63,7 @@ export default function Login() {
     setIsLoading(true);
     const inputData = data as Inputs;
     console.log(inputData);
-  };
+  }; 
 
   const LoginForm = ({ method }: LoginProps) => {
     return (
@@ -95,52 +95,13 @@ export default function Login() {
             )}
           </div>
           <div className="border-b flex-1 pt-2 border-white/20" />
-          <form className="grid gap-2" onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid gap-2 fade-up ">
-              <Label className="text-white" htmlFor="email">
-                Email
-              </Label>
-              <Input
-                {...register("email")}
-                id="email"
-                type="email"
-                placeholder="email@email.com"
-                className="border-white/20 "
-              />
-              {errors.email?.message && (
-                <p>{errors.email?.message === "string"}</p>
-              )}
-            </div>
-            <div className="grid gap-2 fade-up ">
-              <Label className="text-white" htmlFor="password">
-                Senha
-              </Label>
-              <Input
-                {...register("password")}
-                id="password"
-                type="password"
-                placeholder="Senha"
-                className="border-white/20"
-              />
-              {errors.password?.message && (
-                <p>{errors.password?.message === "string"}</p>
-              )}
-            </div>
-            <div className="w-full grid mt-2">
-              <button
-                type="submit"
-                className="flex justify-center bg-black text-white p-2 rounded-sm border-2 border-white/50 transition duration-500 ease-in-out  active:border-black/35"
-              >
-                {isLoading ? (
-                  <Loader className="text-white animate-spin-slow" />
-                ) : method === "signIn" ? (
-                  "Entrar"
-                ) : (
-                  "Criar conta"
-                )}
-              </button>
-            </div>
-          </form>
+          <div onClick={handleGoogleClick} className="text-white flex items-center justify-center border-2 p-2 rounded-sm border-white/50">
+            {isGoogleLoading ? (
+              <Loader className="text-white animate-spin-slow" />
+            ) : (
+              <AuthWithGoogle />
+            )}
+          </div>
         </CardContent>
       </Card>
     );
