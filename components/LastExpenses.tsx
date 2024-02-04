@@ -16,7 +16,7 @@ export default function LastExpenses({
   expenses
 }: OverviewCardProps) {
   return (
-    <Card className="w-72 m-4 shadow-lg">
+    <Card className="w-[284px] m-4 shadow-lg">
       <CardHeader className="flex flex-row justify-between">
         <CardTitle className="text-2xl font-semibold">Últimas despesas</CardTitle>
         <MinusCircle className="h-6 w-6 text-red-700" />
