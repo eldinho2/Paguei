@@ -110,14 +110,13 @@ const incomes = [{
 export default async function Main() {
   const session = await auth()
 
-  console.log(session?.user?.accessToken);
 
   return (
     <main className="w-full">
       <MainResume />
       <div className="flex flex-col justify-center items-center">
       <h1>
-        {session?.user?.name ? `Olá, ${session?.user?.name}` : 'Olá'}
+        {session?.user.accessToken}
       </h1>
       <LastExpenses expenses={expenses} />
       <LastIncome incomes={incomes} />

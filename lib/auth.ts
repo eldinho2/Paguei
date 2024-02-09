@@ -22,7 +22,11 @@ export const config = {
       const result = await checkUser(email as string);
       console.log("result", result);
 
-      user.accessToken = await Login(user as User);
+      if (result === true) {
+        user.accessToken = await Login(user as User);
+      } else {
+        user.accessToken = await Registration(user as User);
+      }
 
       return true;
     },
