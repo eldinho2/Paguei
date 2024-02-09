@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import {Providers} from "@/lib/Providers";
 require('dotenv').config();
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,13 +27,16 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
+        <Providers
+          props={{
+            enableSystem: true,
+            storageKey: "theme",
+            defaultTheme: "system",
+            attribute: "class",
+          }}
         >
           {children}
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

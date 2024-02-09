@@ -1,6 +1,6 @@
 import Link from "next/link";
 import CarouselComponent from "@/components/CarouselComponent";
-import { MoveLeft, Search, MoreVertical, PlusCircle } from "lucide-react";
+import { ChevronLeftIcon, Search, MoreVertical, PlusCircle } from "lucide-react";
 
 export default function Despesas() {
   return (
@@ -9,7 +9,7 @@ export default function Despesas() {
         <div className="flex justify-between items-center text-white w-full px-2">
           <div className="flex items-center justify-start">
             <Link href={"/dashboard"}>
-              <MoveLeft />
+              <ChevronLeftIcon />
             </Link>
             <div className="pl-1">
               <h1 className="font-semibold">Despesas</h1>

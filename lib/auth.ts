@@ -1,8 +1,13 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import AzureADProvider from "next-auth/providers/azure-ad";
 import type { NextAuthConfig } from "next-auth";
-import axios from "axios";
+import { checkUser, Registration, Login } from "../utils/api";
+
+type User = {
+  name: string;
+  email: string;
+  image: string;
+};
 
 export const config = {
   providers: [
@@ -10,48 +15,30 @@ export const config = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    AzureADProvider({
-      clientId: process.env.AZURE_AD_CLIENT_ID,
-      clientSecret: process.env.AZURE_AD_CLIENT_SECRET,
-      tenantId: process.env.AZURE_AD_TENANT_ID,
-    }),
   ],
   callbacks: {
-    authorized({ request, auth }) {
-      const { pathname } = request.nextUrl;
-      if (pathname === "/dashboard") return !!auth;
+    async signIn({ user }: any): Promise<any> {
+      const email = user?.email;
+      const result = await checkUser(email as string);
+      console.log("result", result);
+
+      user.accessToken = await Login(user as User);
+
       return true;
     },
-    async signIn({ user }): Promise<boolean> {
-      console.log("signIn", { user });
 
-      await axios
-        .get(`http://localhost:3005/users/user/${user.email}`)
-        .then(async function (response) {
-          const result = response.data.result;
-          if (result) {
-            await axios.post('http://localhost:3005/auth/login', user)
-              .then(function (response) {
-                console.log('Logged in', response);
-              })
-              .catch(function (error) {
-                console.error("Login error", error.message);
-              });
-          } else {
-            await axios.post('http://localhost:3005/auth/register', user)
-              .then(function (response) {
-                console.log('Registered', response);
-              })
-              .catch(function (error) {
-                console.error("Registration error", error.message);
-              });
-          }
-        })
-        .catch(function (error) {
-          console.error("errorrrrrr", error.message);
-        });
-      
-      return true;
+    async jwt({ token, user }) {
+      if (user) {
+        token = { ...token, ...user };
+      }
+
+      return token;
+    },
+
+    async session({ session, token }: any): Promise<any> {
+      session.accessToken = token.accessToken;
+      session.user = token;
+      return session;
     },
   },
 } satisfies NextAuthConfig;

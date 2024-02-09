@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PlusCircle } from "lucide-react";
+import AddIncomeButton from "@/components/AddIncomeButton";
 
 type OverviewCardProps = {
   incomes: {
@@ -19,7 +19,7 @@ export default function LastIncomes({
     <Card className="w-[284px] m-4 shadow-lg">
       <CardHeader className="flex flex-row justify-between">
         <CardTitle className="text-2xl font-semibold">Últimas receitas</CardTitle>
-        <PlusCircle className="h-6 w-6 text-green-700" />
+        <AddIncomeButton className="h-6 w-6 text-green-700" />
       </CardHeader>
       <div className="h-72 overflow-y-scroll">
       {
