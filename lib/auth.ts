@@ -20,7 +20,6 @@ export const config = {
     async signIn({ user }: any): Promise<any> {
       const email = user?.email;
       const result = await checkUser(email as string);
-      console.log("result", result);
 
       if (result === true) {
         user.accessToken = await Login(user as User);

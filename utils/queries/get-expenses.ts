@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { JwtIsExpired } from "@/utils/jwt-is-expired"
 
-export async function getFunction(newToken: string | Promise<string> | undefined) {
+export async function getFunction(newToken: string) {
   try {
     const response = await axios.get("https://paguei-back-end.onrender.com/expenses/get-all-expenses", {
       headers: {
@@ -30,23 +30,22 @@ export async function getFunction(newToken: string | Promise<string> | undefined
 export function useGetExpenses() {
   const { data: session } = useSession()
   const token = session?.user.accessToken
-  const newToken = JwtIsExpired(token)
+  const [newToken, setNewToken] = useState<string | undefined>(token)
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const updatedToken = await JwtIsExpired(token, session?.user)
+      setNewToken(updatedToken)
+    }
+
+    checkToken()
+  }, [token, session])
 
   const { data, error, isLoading } = useQuery({
     queryFn: () => getFunction(newToken),
     queryKey: ["expenses"],
-    enabled: session != null,
+    enabled: session != null && newToken != null,
   })
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (newToken) {
-        await getFunction(newToken)
-      }
-    }
-
-    fetchData()
-  }, [newToken])
 
   return { data, error, isLoading }
 }
