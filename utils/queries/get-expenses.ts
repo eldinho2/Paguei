@@ -6,11 +6,15 @@ import axios from "axios"
 import { useSession } from "next-auth/react"
 import { JwtIsExpired } from "@/utils/jwt-is-expired"
 
-export async function getFunction(newToken: string) {
+
+export async function getFunction(newToken, email) {
   try {
     const response = await axios.get("https://paguei-back-end.onrender.com/expenses/get-all-expenses", {
       headers: {
         Authorization: `Bearer ${newToken}`,
+      },
+      params: {
+        email: email,
       },
     })
 
@@ -30,6 +34,7 @@ export async function getFunction(newToken: string) {
 export function useGetExpenses() {
   const { data: session } = useSession()
   const token = session?.user.accessToken
+  const email = session?.user.email
   const [newToken, setNewToken] = useState<string | undefined>(token)
 
   useEffect(() => {
@@ -42,7 +47,7 @@ export function useGetExpenses() {
   }, [token, session])
 
   const { data, error, isLoading } = useQuery({
-    queryFn: () => getFunction(newToken || ""),
+    queryFn: () => getFunction(newToken, email),
     queryKey: ["expenses"],
     enabled: session != null && newToken != null && newToken !== "",
   })
