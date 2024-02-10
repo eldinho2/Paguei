@@ -35,16 +35,16 @@ export function useGetExpenses() {
   useEffect(() => {
     const checkToken = async () => {
       const updatedToken = await JwtIsExpired(token, session?.user)
-      setNewToken(updatedToken)
+      setNewToken(updatedToken || "")
     }
 
     checkToken()
   }, [token, session])
 
   const { data, error, isLoading } = useQuery({
-    queryFn: () => getFunction(newToken),
+    queryFn: () => getFunction(newToken || ""),
     queryKey: ["expenses"],
-    enabled: session != null && newToken != null,
+    enabled: session != null && newToken != null && newToken !== "",
   })
 
   return { data, error, isLoading }
