@@ -67,8 +67,6 @@ export default function Main() {
 
   console.log("data", data);
   console.log("isLoading", isLoading);
-  
-
 
   return (
     <main className="w-full">

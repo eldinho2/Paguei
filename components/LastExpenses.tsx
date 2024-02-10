@@ -13,12 +13,28 @@ type OverviewCardProps = {
 };
 
 export default function LastExpenses({ expenses }: OverviewCardProps) {
+  if (!expenses || expenses.length === 0) {
+    return (
+      <Card className="w-[284px] m-4 shadow-lg">
+        <CardHeader className="flex flex-row justify-between">
+          <CardTitle className="text-2xl font-semibold">
+            Últimas despesas
+          </CardTitle>
+          <MinusCircle className="h-6 w-6 text-red-700" />
+        </CardHeader>
+        <CardContent>
+          <p className="text-center">Aguarde, carregando despesas...</p>
+        </CardContent>
+      </Card>
+    );
+  }
 
-  const lastExpenses = expenses.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  ).slice(0, 7
-  )
-
+  const lastExpenses = expenses
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    )
+    .slice(0, 7);
 
   return (
     <Card className="w-[284px] m-4 shadow-lg">
@@ -38,14 +54,12 @@ export default function LastExpenses({ expenses }: OverviewCardProps) {
             <CardContent key={expense.id} className="flex items-center">
               <div className="flex flex-col justify-between w-full">
                 <div className="flex justify-between w-full">
-                  <p className="overflow-hidden text-ellipsis">
-                    {expense.description}
-                  </p>
-                  <div className="overflow-hidden text-ellipsis">
+                    <p className="truncate flex-1">{expense.description}</p>
+                  <div className="flex truncate">
                     <span className="dark:text-white/70 pr-1">R$</span>
-                    {Number(expense.amount).toLocaleString("pt-BR", {
-                      minimumFractionDigits: 2,
-                    })}
+                      {Number(expense.amount).toLocaleString("pt-BR", {
+                        minimumFractionDigits: 2,
+                      })}
                   </div>
                 </div>
                 <div className="text-sm flex justify-between w-full pt-3">
