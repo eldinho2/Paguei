@@ -5,9 +5,6 @@ import { auth } from "@/lib/auth"
 export async function middleware(request: NextRequest) {
   const session = await auth()
 
-  if (session?.user) {
-    console.log('session user middleware.ts',session.user);
-  }
   const pathName = request.nextUrl.pathname;
   if (pathName.startsWith("/dashboard")) {
     if (session) {

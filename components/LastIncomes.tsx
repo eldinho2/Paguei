@@ -21,7 +21,7 @@ export default function LastIncomes({
         <CardTitle className="text-2xl font-semibold">Últimas receitas</CardTitle>
         <AddIncomeButton className="h-6 w-6 text-green-700" />
       </CardHeader>
-      <div className="h-72 overflow-y-scroll">
+      <div className="min-h-28 max-h-72 overflow-y-scroll">
       {
         incomes.map((incomes) => (
           <CardContent key={incomes.id} className="flex items-center">

@@ -4,7 +4,8 @@ type User = {
   name: string;
   email: string;
   image: string;
-};
+  accessToken?: string;
+} | undefined;
 
 export async function checkUser(email: string) {
   let userExists = false;
