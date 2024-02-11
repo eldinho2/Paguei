@@ -45,7 +45,9 @@ export default function LastIncomes({ incomes }: OverviewCardProps) {
                 <p>{incomes.description}</p>
                 <div>
                   <span className="dark:text-white/70 pr-1">R$</span>
-                  {incomes.amount}
+                  {incomes.amount.toLocaleString("pt-BR", {
+                        minimumFractionDigits: 2,
+                      })}
                 </div>
               </div>
               <div className="text-sm flex justify-between w-full pt-3">

@@ -21,13 +21,22 @@ const months = [
 
 export default function CarouselComponent() {
   const currentMonth = new Date().getMonth()
+  
   const [api, setApi] = useState<CarouselApi>()
+  const [selectedMonth, setSelectedMonth] = React.useState(0)
+  
 
   useEffect(() => {
     if (!api) {
       return
     }
 
+    setSelectedMonth(api.selectedScrollSnap() + 1)
+
+    api.on("select", () => {
+      setSelectedMonth(api.selectedScrollSnap() + 1)
+    })
+    
   }, [api])
 
 
@@ -37,6 +46,8 @@ export default function CarouselComponent() {
     }
   }
 
+  console.log(selectedMonth);
+  
 
   return (
     <Carousel

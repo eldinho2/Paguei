@@ -57,7 +57,7 @@ export default function LastExpenses({ expenses }: OverviewCardProps) {
                     <p className="truncate flex-1">{expense.description}</p>
                   <div className="flex truncate">
                     <span className="dark:text-white/70 pr-1">R$</span>
-                      {Number(expense.amount).toLocaleString("pt-BR", {
+                      {expense.amount.toLocaleString("pt-BR", {
                         minimumFractionDigits: 2,
                       })}
                   </div>
