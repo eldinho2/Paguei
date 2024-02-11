@@ -11,6 +11,7 @@ export default function Main() {
   const { data: expensesData, isLoading:  isLoadingExpenses} = useGetExpenses();
   const { data: incomesData, isLoading: isLoadingIncomes } = useGetIncomes();
   
+  
   return (
     <main className="w-full">
       <MainResume />

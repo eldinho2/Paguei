@@ -52,9 +52,9 @@ export default function OverviewCard({
           <span className="pr-2">
             <PlusCircle className="h-6 w-6 text-green-700" />
           </span>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full gap-1">
             <div>Receitas</div>
-            <div>
+            <div className="truncate">
               <span className="dark:text-white/70 pr-1">R$</span>
               {
                 cardIncomeValueByMonth?.toLocaleString("pt-BR", {
@@ -70,9 +70,9 @@ export default function OverviewCard({
           <span className="pr-2">
             <MinusCircle className="h-6 w-6 text-red-700" />
           </span>
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full gap-1">
             <div>Despesas</div>
-            <div>
+            <div className="truncate">
               <span className="dark:text-white/70 pr-1">R$</span>
               {
                 cardExpenseValueByMonth?.toLocaleString("pt-BR", {
