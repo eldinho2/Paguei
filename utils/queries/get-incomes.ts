@@ -8,27 +8,27 @@ import { JwtIsExpired } from "@/utils/jwt-is-expired"
 
 export async function getFunction(newToken: any, email: any) {
     try {
-    const response = await axios.get(`https://paguei-back-end.onrender.com/expenses/get-all-expenses/${email}`, {  
+    const response = await axios.get(`https://paguei-back-end.onrender.com/incomes/get-all-incomes/${email}`, {  
       headers: {
           Authorization: `Bearer ${newToken}`,
         },
     })
     
 
-    const expenses = response.data.result
+    const incomes = response.data.result
 
-    if (!expenses || expenses.length === 0) {
+    if (!incomes || incomes.length === 0) {
       return []
     }
 
-    return expenses
+    return incomes
   } catch (error) {
     console.error(error)
     throw error
   }
 }
 
-export function useGetExpenses() {
+export function useGetIncomes() {
   const { data: session } = useSession()
   const token = session?.user.accessToken
   const email = session?.user.email
@@ -46,7 +46,7 @@ export function useGetExpenses() {
 
   const { data, error, isLoading } = useQuery({
     queryFn: () => getFunction(newToken, email),
-    queryKey: ["expenses"],
+    queryKey: ["incomes"],
     enabled: session != null && newToken != null && newToken !== "",
   })
 
