@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { type CarouselApi } from "@/components/ui/carousel"
-
+import { useSelectedMonth } from "@/stores/selectedMonth-store"
 
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -19,11 +19,15 @@ const months = [
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
 ]
 
+
 export default function CarouselComponent() {
+  const month = useSelectedMonth((state: any) => state.month)
+  const updateSelecteMonth = useSelectedMonth((state: any) => state.updateSelecteMonth)
   const currentMonth = new Date().getMonth()
   
   const [api, setApi] = useState<CarouselApi>()
   const [selectedMonth, setSelectedMonth] = React.useState(0)
+  updateSelecteMonth(selectedMonth)
   
 
   useEffect(() => {
@@ -32,10 +36,10 @@ export default function CarouselComponent() {
     }
 
     setSelectedMonth(api.selectedScrollSnap() + 1)
-
     api.on("select", () => {
       setSelectedMonth(api.selectedScrollSnap() + 1)
     })
+    
     
   }, [api])
 
@@ -46,8 +50,7 @@ export default function CarouselComponent() {
     }
   }
 
-  console.log(selectedMonth);
-  
+  console.log('selectedMonth', selectedMonth) 
 
   return (
     <Carousel
