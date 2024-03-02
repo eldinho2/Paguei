@@ -29,15 +29,12 @@ interface ISelectedMonth {
 function MonthResume({ expenses, incomes }: any) {
   const { theme } = useTheme();
 
-  //console.log(expenses);
-  
-
   const month = useSelectedMonth((state: ISelectedMonth) => state.month); 
 
-  const expensesNames = expenses?.map((expense: any) => expense.description);
-  const expensesValues = expenses?.map((expense: any) => expense.amount);
-
-  //console.log(expensesValues, expensesNames);
+  const expensesSorted = expenses?.sort((a: any, b: any) => a.amount - b.amount);
+  const expensesNames = expensesSorted?.map((expense: any) => expense.description);
+  const expensesValues = expensesSorted?.map((expense: any) => expense.amount);
+  
 
   const selectedMonth = months[month - 1];
 
@@ -53,8 +50,8 @@ function MonthResume({ expenses, incomes }: any) {
           <DynamicChart
             type="donut"
             width={"300px"}
-            height={"300px"}
-            series = {!expensesValues ? [0] : expensesValues}
+            height={"100%"}
+            series = {!expensesValues ? [0] : expensesValues.reverse()}
             options={{
               plotOptions: {
                 pie: {
@@ -62,49 +59,52 @@ function MonthResume({ expenses, incomes }: any) {
                   endAngle: 360,
                   expandOnClick: true,
                   offsetX: -15,
-                  offsetY: 0,
+                  offsetY: -4,
                   customScale: 1,
-                  dataLabels: {
-                      offset: 0,
-                      minAngleToShowLabel: 10
-                  }, 
                   donut: {
-                    size: '80%',
+                    size: '60%',
                     background: 'transparent',
                     labels: {
-                      show: false,
+                      show: true,
+                      total: {
+                        formatter: function (val) {
+                          const brl = parseFloat(val).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+                          return brl;
+                        },
+                      },
+                      name: {
+                        show: true,
+                        fontSize: '13px',
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 400,
+                        offsetY: 73,
+                      },
                       value: {
                         show: true,
-                        fontSize: '16px',
-                        fontFamily: 'Helvetica, Arial, sans-serif',
-                        fontWeight: 400,
-                        color: undefined,
+                        fontSize: '12px',
+                        fontFamily: 'Inter, sans-serif',
+                        fontWeight: 600,
+                        offsetY: 73,
+                        color: theme === "dark" ? "white" : "black",
                         formatter: function (val) {
-                          return 'R$ ' + val.toLocaleString();
-                        }
+                          const brl = parseFloat(val).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+                          return brl;
+                        },
                       },
-                      total: {
-                        show: false,
-                        showAlways: false,
-                        label: 'Total',
-                        fontSize: '16px',
-                        fontFamily: 'Helvetica, Arial, sans-serif',
-                        fontWeight: 400,
-                        color: '#373d3f',
-                      }
                     }
                   },      
                 }
               },
-              labels: !expensesNames ? ["Sem despesas"] : expensesNames,
+              labels: !expensesNames ? ["Sem despesas"] : expensesNames.reverse(),
               legend: {
+                fontSize: "12px",
                 offsetX: 15,
                 offsetY: -15,
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: 12,
                 labels: {
                   colors: theme === "dark" ? "white" : "black",
-                }
+                },
               },
               dataLabels: {
                 enabled: true,

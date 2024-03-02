@@ -2,6 +2,7 @@ import { PlusCircle, MinusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import {useSelectedMonth} from "@/stores/selectedMonth-store";
+import {FilterByMonth} from '@/utils/filterByMonth';
 
 type OverviewCardProps = {
   expenses: {
@@ -31,45 +32,9 @@ export default function OverviewCard({ expenses, incomes }: OverviewCardProps) {
 
   const month = useSelectedMonth((state: ISelectedMonth) => state.month); 
 
-  const cardIncomeValueByMonth = incomes?.reduce((acc, income) => {
-
-    const startDate = new Date(new Date().getFullYear(), month - 1, 1);
-    const endDate = new Date(
-      new Date().getFullYear(),
-      month,
-      0,
-      23,
-      59,
-      59,
-      999,
-    );
-
-    const date = new Date(income.createdAt);
-    if (date >= startDate && date <= endDate) {
-      return acc + income.amount;
-    }
-
-    return acc;
-  } , 0);
-
-  const cardExpenseValueByMonth = expenses?.reduce((acc, expense) => {
-    const startDate = new Date(new Date().getFullYear(), month - 1, 1);
-    const endDate = new Date(
-      new Date().getFullYear(),
-      month,
-      0,
-      23,
-      59,
-      59,
-      999,
-    );
-
-    const date = new Date(expense.createdAt);
-    if (date >= startDate && date <= endDate) {
-      return acc + expense.amount;
-    }
-    return acc;
-  } , 0);
+  const cardIncomeValueByMonth = FilterByMonth({data: incomes, month: month});
+  const cardExpenseValueByMonth = FilterByMonth({data: expenses, month: month});
+  
   
   return (
     <Card className="w-72 m-4 shadow-lg">
