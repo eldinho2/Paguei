@@ -12,6 +12,8 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   }
 });
 
-const nextConfig = {}
+const nextConfig = {
+  transpilePackages: ['@mui/x-charts']
+}
 
 module.exports = withPWA(nextConfig)
