@@ -44,7 +44,7 @@ export default function LastExpenses({ expenses }: OverviewCardProps) {
         </CardTitle>
         <MinusCircle className="h-6 w-6 text-red-700" />
       </CardHeader>
-      <div className="min-h-28 max-h-72 overflow-y-scroll">
+      <div className="min-h-28 max-h-44 overflow-y-scroll">
         {!lastExpenses ? (
           <CardContent>
             <p className="text-center">Nenhuma despesa encontrada</p>

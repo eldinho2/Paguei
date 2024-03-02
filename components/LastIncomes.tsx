@@ -37,14 +37,14 @@ export default function LastIncomes({ incomes }: OverviewCardProps) {
     <Card className="w-[284px] m-4 shadow-lg">
       <CardHeader className="flex flex-row justify-between">
         <CardTitle className="text-2xl font-semibold">
-          Últimas despesas
+          Últimas receitas
         </CardTitle>
-        <AddIncomeButton className="h-6 w-6 text-red-700" />
+        <AddIncomeButton className="h-6 w-6 text-green-700" />
       </CardHeader>
-      <div className="min-h-28 max-h-72 overflow-y-scroll">
+      <div className="min-h-28 max-h-44 overflow-y-scroll">
         {!lastIncomes ? (
           <CardContent>
-            <p className="text-center">Nenhuma despesa encontrada</p>
+            <p className="text-center">Nenhuma receita encontrada</p>
           </CardContent>
         ) : (
           lastIncomes.map((income) => (
