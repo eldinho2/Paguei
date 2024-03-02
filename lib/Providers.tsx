@@ -19,8 +19,7 @@ export function Providers({ props, children }: ProvidersProps) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 4 * 1000,
-            refetchInterval: 4 * 1000,
+            staleTime: 300000,
           },
         },
       })
