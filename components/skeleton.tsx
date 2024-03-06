@@ -19,9 +19,8 @@ export function Skeleton1() {
 
 export function Skeleton2() {
   return (
-    <div className="flex justify-center gap-3 flex-col h-[172px] p-6 animate-pulse">
-        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-[150px] mb-3.5"></div>
-        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-[235px] mb-2.5"></div>
+    <div className="flex justify-center gap-2 flex-col p-6 animate-pulse">
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-[235px] mb-1.5"></div>
         <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 w-[230px] mb-1.5"></div>
     </div>
   );

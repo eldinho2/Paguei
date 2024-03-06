@@ -46,6 +46,9 @@ export default function OverviewCard({
     <div>
       {isLoading ? (
         <Card className="w-72 h-full m-4 shadow-lg p-0">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold">Visão geral</CardTitle>
+          </CardHeader>
           <Skeleton2 />
         </Card>
       ) : (
