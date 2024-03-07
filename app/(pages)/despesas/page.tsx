@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CarouselComponent from "@/components/CarouselComponent";
 import { ChevronLeftIcon, Search, MoreVertical, PlusCircle } from "lucide-react";
+import { ExpenseListTable } from "@/components/ExpensesListTable";
 
 export default function Despesas() {
   return (
@@ -28,7 +29,12 @@ export default function Despesas() {
           </div>
         </div>
       </header>
-      <PlusCircle className="h-12 w-12 fixed bottom-10 right-10 rounded-full bg-red-300 shadow-lg" />
+      <main className="pt-14">
+        <div>
+          <ExpenseListTable />
+        </div>
+      </main>
+      <PlusCircle className="h-12 w-12 fixed bottom-10 right-10 rounded-full bg-red-700 shadow-lg" />
     </>
   );
 }
