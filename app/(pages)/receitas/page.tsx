@@ -1,7 +1,7 @@
 import Link from "next/link";
 import CarouselComponent from "@/components/CarouselComponent";
-import AddIncomeButton from "@/components/AddIncomeButton";
 import { ChevronLeftIcon, Search, MoreVertical } from "lucide-react";
+import AddIncomeDialogButton from "@/components/AddIncomeDialogButton";
 
 export default function Receitas() {
   return (
@@ -21,9 +21,8 @@ export default function Receitas() {
                 </p>
               </div>
             </div>
-            <div className="flex gap-4">
-              <Search />
-              <MoreVertical />
+            <div>
+              <AddIncomeDialogButton/>
             </div>
           </div>
           <div className="flex justify-center items-center">
@@ -31,7 +30,6 @@ export default function Receitas() {
           </div>
         </div>
       </header>
-      <AddIncomeButton className="h-12 w-12 text-green-700 fixed bottom-10 right-10" />
     </>
   );
 }
