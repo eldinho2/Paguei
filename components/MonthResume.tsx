@@ -3,7 +3,6 @@ import * as React from "react";
 import { useTheme } from "next-themes";
 import { useSelectedMonth } from "@/stores/selectedMonth-store";
 import dynamic from "next/dynamic";
-import { Skeleton1 } from "@/components/Skeleton";
 
 const DynamicChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -53,7 +52,7 @@ function MonthResume({ expenses, isLoading }: any) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <Skeleton1 />
+              Carregando...
             </CardContent>
           </Card>
         ) : (

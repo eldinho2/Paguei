@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { useSelectedMonth } from "@/stores/selectedMonth-store";
 import { FilterByMonth } from "@/utils/filterByMonth";
-import { Skeleton2 } from "@/components/Skeleton";
 
 type OverviewCardProps = {
   expenses: {
@@ -49,7 +48,7 @@ export default function OverviewCard({
           <CardHeader>
             <CardTitle className="text-xl font-semibold">Visão geral</CardTitle>
           </CardHeader>
-          <Skeleton2 />
+          Carregando...
         </Card>
       ) : (
         <Card className="w-72 m-4 shadow-lg">
