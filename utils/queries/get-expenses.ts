@@ -6,11 +6,11 @@ import axios from "axios"
 import { useSession } from "next-auth/react"
 import { JwtIsExpired } from "@/utils/jwt-is-expired"
 
-export async function getFunction(newToken: any, email: any) {
+async function getExpensesFunction(token: any, email: any) {
     try {
     const response = await axios.get(`https://paguei-back-end.onrender.com/expenses/get-all-expenses/${email}`, {  
       headers: {
-          Authorization: `Bearer ${newToken}`,
+          Authorization: `Bearer ${token}`,
         },
     })
     
@@ -30,24 +30,21 @@ export async function getFunction(newToken: any, email: any) {
 
 export function useGetExpenses() {
   const { data: session } = useSession()
-  const token = session?.user.accessToken
   const email = session?.user.email
-  const [newToken, setNewToken] = useState<string | undefined>(token)
-
-  useEffect(() => {
-    const checkToken = async () => {
-      const updatedToken = await JwtIsExpired(token, session?.user)
-      setNewToken(updatedToken || "")
-    }
-
-    checkToken()
-  }, [token, session])
+  //console.log(session?.user.user.email);
+  const token = session?.user.accessToken
+  //console.log(session?.user.email);
+  //console.log(session?.user.accessToken);
+  
 
 
   const { data, error, isLoading } = useQuery({
-    queryFn: () => getFunction(newToken, email),
+    queryFn: () => {
+      if (token && email) {
+        return getExpensesFunction(token, email)
+      }
+    },
     queryKey: ["expenses"],
-    enabled: session != null && newToken != null && newToken !== "",
   })
 
   return { data, error, isLoading }

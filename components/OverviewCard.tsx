@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { useSelectedMonth } from "@/stores/selectedMonth-store";
 import { FilterByMonth } from "@/utils/filterByMonth";
-import { Skeleton2 } from "./skeleton";
+import { Skeleton2 } from "./Skeleton";
 
 type OverviewCardProps = {
   expenses: {

@@ -1,13 +1,18 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
+  DialogFooter,
 } from "@/components/ui/dialog";
 
 import { MinusCircle } from "lucide-react";
+import AddBillForm from "./form/addBillForm";
+
 
 export default function AddExpenseDialogButton() {
   return (
@@ -15,14 +20,11 @@ export default function AddExpenseDialogButton() {
       <DialogTrigger>
         <MinusCircle className="rounded-full bg-red-700 text-black shadow-lg" />
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-[300px] flex flex-col items-center justify-center">
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle>Adicionar Despesa</DialogTitle>
         </DialogHeader>
+        <AddBillForm bill="expense" />
       </DialogContent>
     </Dialog>
   );

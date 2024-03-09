@@ -3,7 +3,7 @@ import * as React from "react";
 import { useTheme } from "next-themes";
 import { useSelectedMonth } from "@/stores/selectedMonth-store";
 import dynamic from "next/dynamic";
-import { Skeleton1 } from "./skeleton";
+import { Skeleton1 } from "./Skeleton";
 
 const DynamicChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -83,7 +83,7 @@ function MonthResume({ expenses, isLoading }: any) {
               Resumo de {selectedMonth}
             </CardTitle>
           </CardHeader>
-          <CardContent className="">
+          <CardContent className="overflow-hidden">
             <DynamicChart
               type="donut"
               width={"300px"}
@@ -94,8 +94,8 @@ function MonthResume({ expenses, isLoading }: any) {
                   pie: {
                     startAngle: 0,
                     endAngle: 360,
-                    expandOnClick: true,
-                    offsetX: -15,
+                    expandOnClick: false,
+                    offsetX: -90,
                     offsetY: -4,
                     customScale: 1,
                     donut: {
@@ -140,8 +140,11 @@ function MonthResume({ expenses, isLoading }: any) {
                 },
                 labels: !expensesNames ? [] : expensesNames.reverse(),
                 legend: {
+                  floating: true,
+                  width: 150,
+                  height: 130,
                   fontSize: "12px",
-                  offsetX: 15,
+                  offsetX: 14,
                   offsetY: -15,
                   fontFamily: "Inter, sans-serif",
                   fontWeight: 12,

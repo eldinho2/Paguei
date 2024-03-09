@@ -14,16 +14,13 @@ type ProvidersProps = {
 
 export function Providers({ props, children }: ProvidersProps) {
   
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            staleTime: 300000,
-          },
-        },
-      })
-  )
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 300000,
+      },
+    },
+  });
 
   return (
     <SessionProvider>

@@ -75,12 +75,23 @@ export const columns: ColumnDef<Expense>[] = [
       );
     },
     cell: ({ row }) => (
-      <div className="px-0">{row.getValue("description")}</div>
+      <div className="">{row.getValue("description")}</div>
     ),
   },
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0 mx-0 overflow-hidden whitespace-nowrap text-left text-ellipsis"
+        >
+          Valor
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));
 
@@ -207,7 +218,7 @@ export function ExpenseListTable() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="rounded-md border max-w-[340px]">
+          <div className="rounded-md border w-[350px]">
             <Table>
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
@@ -233,10 +244,10 @@ export function ExpenseListTable() {
                     <TableRow
                       key={row.id}
                       data-state={row.getIsSelected() && "selected"}
-                      className="p-0"
+                      className="p-2 max-w-28 truncate"
                     >
                       {row.getVisibleCells().map((cell) => (
-                        <TableCell className="p-2" key={cell.id}>
+                        <TableCell className="p-2 max-w-28 truncate" key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -251,7 +262,7 @@ export function ExpenseListTable() {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      Sem resultados.
+                        Sem resultados. 😔
                     </TableCell>
                   </TableRow>
                 )}

@@ -8,7 +8,5 @@ declare module "next-auth" {
       image: string;
       accessToken: string;
     };
-
-    backEndToken: string;
   }
 }
