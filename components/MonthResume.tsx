@@ -3,7 +3,7 @@ import * as React from "react";
 import { useTheme } from "next-themes";
 import { useSelectedMonth } from "@/stores/selectedMonth-store";
 import dynamic from "next/dynamic";
-import { Skeleton1 } from "./Skeleton";
+import { Skeleton1 } from "@/components/Skeleton";
 
 const DynamicChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
