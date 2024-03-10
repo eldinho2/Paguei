@@ -9,6 +9,7 @@ import {
 import {
   ColumnDef,
   ColumnFiltersState,
+  RowData,
   SortingState,
   VisibilityState,
   flexRender,
@@ -42,6 +43,8 @@ import {
 
 import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
 
+import { useDeleteExpense } from '@/utils/queries/delete-expense'
+
 export type Expense = {
   id: string;
   amount: number;
@@ -50,6 +53,13 @@ export type Expense = {
   userId: string;
   createdAt: string;
 };
+
+
+declare module '@tanstack/table-core' {
+  interface TableMeta<TData extends RowData> {
+    handleDeleteExpense: (id: string) => void;
+  }
+}
 
 export const columns: ColumnDef<Expense>[] = [
   {
@@ -106,8 +116,9 @@ export const columns: ColumnDef<Expense>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const payment = row.original;
+      const id = row.original.id;
 
       return (
         <div className="p-0 m-0">
@@ -119,15 +130,13 @@ export const columns: ColumnDef<Expense>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
+            <DropdownMenuLabel>Ações</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Ver detalhes</DropdownMenuItem>
+            <DropdownMenuItem>Editar</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => table.options?.meta?.handleDeleteExpense?.(id)}
+            >Excluir</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -138,6 +147,7 @@ export const columns: ColumnDef<Expense>[] = [
 
 export function ExpenseListTable() {
   const { data: data, isLoading: isLoadingExpensesByMonth } = useGetExpensesByMonth();
+  const { deleteExpense } = useDeleteExpense();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -148,9 +158,19 @@ export function ExpenseListTable() {
   const [rowSelection, setRowSelection] = React.useState({});
 
 
+  const handleDeleteExpense = (expenseId: string) => {
+    console.log("deleting expense", expenseId);
+    
+    deleteExpense({ id: expenseId });
+  };
+
+
   const table = useReactTable({
     data,
     columns,
+    meta: {
+      handleDeleteExpense: (id: string) => handleDeleteExpense(id),
+    },
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
