@@ -1,7 +1,7 @@
 import Link from "next/link";
 import CarouselComponent from "@/components/CarouselComponent";
-import { ChevronLeftIcon, Search, MoreVertical } from "lucide-react";
-import { ExpenseListTable } from "@/components/ExpensesListTable";
+import { ChevronLeftIcon } from "lucide-react";
+import { ExpenseListTable } from "@/components/BillListTable/ExpensesListTable";
 import AddExpenseDialog from "@/components/AddExpenseDialogButton";
 
 export default function Despesas() {
@@ -15,7 +15,7 @@ export default function Despesas() {
                 <ChevronLeftIcon />
               </Link>
               <div className="pl-8">
-                <h1 className="font-semibold">Receitas</h1>
+                <h1 className="font-semibold">Despesas</h1>
                 <p className="text-white/75">
                   <span className="text-white/60 pr-1 pt-1">R$</span>
                   500.00
@@ -32,7 +32,7 @@ export default function Despesas() {
         </div>
       </header>
       <main className="pt-14">
-        <ExpenseListTable />
+        <ExpenseListTable bill="expense" />
       </main>
     </>
   );

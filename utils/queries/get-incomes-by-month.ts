@@ -7,29 +7,29 @@ import { useSession } from "next-auth/react"
 import { JwtIsExpired } from "@/utils/jwt-is-expired"
 import { useSelectedMonth } from '@/stores/selectedMonth-store';
 
-async function GetExpensesByMonth(newToken: any, email: any, month: any) {
+async function GetIncomesByMonth(newToken: any, email: any, month: any) {
   try{
-  const response = await axios.get(`https://paguei-back-end.onrender.com/expenses/get-expense-by-month/${month}/${email}`, {
+  const response = await axios.get(`https://paguei-back-end.onrender.com/incomes/get-income-by-month/${month}/${email}`, {
     headers: {
         Authorization: `Bearer ${newToken}`,
       },
   })
 
-    const expenses = response.data.result
+    const incomes = response.data.result
 
 
-    if (!expenses || expenses.length === 0) {
+    if (!incomes || incomes.length === 0) {
       return []
     }
 
-    return expenses
+    return incomes
   } catch (error) {
     console.error(error)
     throw error
   }
 }
 
-export function useGetExpensesByMonth() {
+export function useGetIncomesByMonth() {
   const month = useSelectedMonth((state) => state.month)
 
   const { data: session } = useSession()
@@ -48,8 +48,8 @@ export function useGetExpensesByMonth() {
 
 
   const { data, error, isLoading } = useQuery({
-    queryFn: () => GetExpensesByMonth(newToken, email, month),
-    queryKey: ["expenses-by-month", month],
+    queryFn: () => GetIncomesByMonth(newToken, email, month),
+    queryKey: ["incomes-by-month", month],
     enabled: session != null && newToken != null && newToken !== "",
   })
 

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import CarouselComponent from "@/components/CarouselComponent";
-import { ChevronLeftIcon, Search, MoreVertical } from "lucide-react";
+import { ChevronLeftIcon } from "lucide-react";
 import AddIncomeDialogButton from "@/components/AddIncomeDialogButton";
+import { ExpenseListTable } from "@/components/BillListTable/ExpensesListTable";
 
 export default function Receitas() {
   return (
@@ -30,6 +31,9 @@ export default function Receitas() {
           </div>
         </div>
       </header>
+      <main className="pt-14">
+        <ExpenseListTable bill="income" />
+      </main>
     </>
   );
 }
