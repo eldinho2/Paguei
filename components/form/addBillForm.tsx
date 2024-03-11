@@ -81,8 +81,6 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
   const amount = form.watch("amount");
   const fixed = form.watch("fixed");
 
-  //console.log(amount, fixed);
-
 
   return (
     <Form {...form}>

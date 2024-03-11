@@ -8,7 +8,6 @@ export default async function CheckUser() {
       const session = await auth();
 
       if (!session?.user) {
-        console.log(session);
         redirect("/login");
       }
     };

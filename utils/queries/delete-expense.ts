@@ -21,9 +21,6 @@ async function DeleteExpense( newToken: string, { id }: DeleteExpenseProps) {
     id
   }
   
-  console.log(headers);
-  console.log(data);
-  
 
   axios
     .post(
@@ -56,7 +53,6 @@ export const useDeleteExpense = () => {
     const checkToken = async () => {
 
       const updatedToken = await JwtIsExpired(token, session?.user);
-      console.log("updatedToken", updatedToken);
       
       setNewToken(updatedToken || "");
     };

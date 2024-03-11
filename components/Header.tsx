@@ -9,7 +9,6 @@ export default async function Header() {
   const session = await auth();
 
   if (!session?.user) {
-    console.log(session);
     redirect("/dashboard");
   }
 

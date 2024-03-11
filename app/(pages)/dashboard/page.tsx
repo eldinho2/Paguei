@@ -7,7 +7,6 @@ export default async function Dashboard() {
   const session = await auth()
 
   if (!session?.user) {
-    console.log('session user pge.tsx', session)
     redirect('/login')
   }
 

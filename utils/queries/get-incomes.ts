@@ -37,8 +37,6 @@ export function useGetIncomes() {
 
   const token = session?.user.accessToken
 
-  console.log('log 1 -----------------------------------------', session);  
-
   const { data, error, isLoading } = useQuery({
     queryFn: () => {
       if (token && email) {
