@@ -5,9 +5,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
+import { QueryCache } from '@tanstack/react-query'
 import { useSelectedMonth } from '@/stores/selectedMonth-store';
 
-type CreateExpenseProps = {
+type CreateIncomeProps = {
   amount: number;
   description: string;
   fixed: boolean;
@@ -16,9 +17,9 @@ type CreateExpenseProps = {
 };
 
 
-async function CreateExpense(
+async function CreateIncome(
   newToken: string,
-  { amount, description, fixed, userId, date }: CreateExpenseProps
+  { amount, description, fixed, userId, date }: CreateIncomeProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -33,14 +34,13 @@ async function CreateExpense(
   };
 
   try {
-  const response = await axios
-    .post(
-      "https://paguei-back-end.onrender.com/expenses/create-expense",
+    const response = await axios.post(
+      "https://paguei-back-end.onrender.com/incomes/create-income",
       data,
       {
         headers: headers,
       }
-    )
+    );
 
     if (response.data) {
       return response.data.result.id;
@@ -53,15 +53,20 @@ async function CreateExpense(
   }
 }
 
-export const useCreateExpense = () => {
+export const useCreateIncome = () => {
   const queryClient = useQueryClient();
   const month = useSelectedMonth((state) => state.month)
 
 
+
   const { data: session } = useSession();
-  const token = session?.user.accessToken;  
+  const token = session?.user.accessToken;
+
   
-  const [newToken, setNewToken] = useState<string | undefined>(token);  
+  
+  const [newToken, setNewToken] = useState<string | undefined>(token);
+
+  
 
   useEffect(() => {
     const checkToken = async () => {
@@ -74,17 +79,24 @@ export const useCreateExpense = () => {
     checkToken();
   }, [token, session]);
 
-  const { mutateAsync: addExpense } = useMutation({
-    mutationFn: (variables: CreateExpenseProps) => CreateExpense(newToken!, variables),
-    onSuccess: (data, variables) => {
+  const { mutateAsync: addIncome } = useMutation({
+    mutationFn: (variables: CreateIncomeProps) => CreateIncome(newToken!, variables),
+    onSuccess: (data, variables, content) => {
 
-      const addedExpense = {
+      console.log("data", data);
+      console.log("variables", variables);
+      console.log("content", content);
+      
+      const cachedData = queryClient.getQueryData(['incomes-by-month', month]);
+      console.log("cachedData", cachedData);
+
+      const addedIncome = {
         ...variables,
         id: data,
       }
 
-      queryClient.setQueryData(['expenses-by-month', month], (old: any) => {
-        return [...old, addedExpense]
+      queryClient.setQueryData(['incomes-by-month', month], (old: any) => {
+        return [...old, addedIncome]
       })
       
     },
@@ -94,6 +106,6 @@ export const useCreateExpense = () => {
   });
 
   return {
-    addExpense,
+    addIncome,
   };
 };

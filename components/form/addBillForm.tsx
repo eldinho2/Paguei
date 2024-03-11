@@ -1,22 +1,19 @@
+"use client"
+
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,14 +23,11 @@ import { Input } from "@/components/ui/input";
 
 import { DialogClose } from "@/components/ui/dialog";
 
-import { MinusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CalendarForm } from "@/components/CalendarForm";
 import { useSession } from "next-auth/react"
-import { useQueryClient } from "@tanstack/react-query";
-import { useMutation } from "react-query";
 
 import { useCreateExpense } from '@/utils/queries/create-expense'
+import { useCreateIncome } from '@/utils/queries/create-income'
 
 const formSchema = z.object({
   description: z.string(),
@@ -55,12 +49,18 @@ type AddBillFormProps = {
 
 export default function AddBillForm({ bill }: AddBillFormProps) {
   const { addExpense } = useCreateExpense()
+  const { addIncome } = useCreateIncome()
+
+  function handleAddBIll(values: z.infer<typeof formSchema>) {
+    if (bill === "expense") {
+      addExpense(values);
+    } else {
+      addIncome(values);
+    }
+  }
 
   const { data: session } = useSession()
   const userEmail = session?.user?.email;
-
-  const token = session?.user.accessToken;
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -72,10 +72,8 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-
-    addExpense(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {    
+    handleAddBIll(values);
   }
 
   const amount = form.watch("amount");
