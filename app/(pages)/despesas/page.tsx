@@ -4,7 +4,11 @@ import { ChevronLeftIcon } from "lucide-react";
 import { ExpenseListTable } from "@/components/BillListTable/ExpensesListTable";
 import AddExpenseDialog from "@/components/AddExpenseDialogButton";
 
+import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
+
 export default function Despesas() {
+  const { data, isLoading } = useGetExpensesByMonth();
+
   return (
     <>
       <header className="fixed z-30 w-full flex justify-between items-center bg-[#252628]">
@@ -17,8 +21,19 @@ export default function Despesas() {
               <div className="pl-8">
                 <h1 className="font-semibold">Despesas</h1>
                 <p className="text-white/75">
-                  <span className="text-white/60 pr-1 pt-1">R$</span>
-                  500.00
+                  {isLoading
+                    ? "Carregando..."
+                    : data?.length === 0
+                    ? "Nenhuma receita..."
+                    : `Total: R$ ${data
+                        ?.reduce(
+                          (acc: any, curr: { amount: any }) =>
+                            acc + curr.amount,
+                          0
+                        )
+                        .toLocaleString("pt-BR", {
+                          minimumFractionDigits: 2,
+                        })}`}
                 </p>
               </div>
             </div>
@@ -27,7 +42,7 @@ export default function Despesas() {
             </div>
           </div>
           <div className="flex justify-center items-center">
-          <CarouselComponent />
+            <CarouselComponent />
           </div>
         </div>
       </header>
