@@ -35,8 +35,6 @@ export function CalendarForm({ bill, addForm }:CalendarFormProps ) {
   } else {
     bill = "receita";
   }
-
-  console.log(date);
   
   date ? addForm.setValue('createdAt', date.toISOString()) : setDate(new Date());
   

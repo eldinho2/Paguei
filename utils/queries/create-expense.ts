@@ -31,10 +31,7 @@ async function CreateExpense(
     fixed,
     userId,
     createdAt
-  };
-
-  console.log("Data to send:", data);
-  
+  };  
 
   try {
   const response = await axios
@@ -81,9 +78,6 @@ export const useCreateExpense = () => {
   const { mutateAsync: addExpense } = useMutation({
     mutationFn: (variables: CreateExpenseProps) => CreateExpense(newToken!, variables),
     onSuccess: (data, variables) => {
-
-      
-      console.log("Variables:", variables);
 
       const addedExpense = {
         ...variables,

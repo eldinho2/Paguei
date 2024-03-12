@@ -1,8 +1,6 @@
 import { PlusCircle, MinusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import { useSelectedMonth } from "@/stores/selectedMonth-store";
-import { FilterByMonth } from "@/utils/filterByMonth";
 
 type OverviewCardProps = {
   expenses: {
@@ -34,12 +32,8 @@ export default function OverviewCard({
   incomes,
   isLoading,
 }: OverviewCardProps) {
-  const month = useSelectedMonth((state: ISelectedMonth) => state.month);
-  const cardIncomeValueByMonth = FilterByMonth({ data: incomes, month: month });
-  const cardExpenseValueByMonth = FilterByMonth({
-    data: expenses,
-    month: month,
-  });
+  const cardTotalExpense = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
+  const cardTotalIncome = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
 
   return (
     <div>
@@ -64,7 +58,7 @@ export default function OverviewCard({
                 <div>Receitas</div>
                 <div className="truncate">
                   <span className="dark:text-white/70 pr-1">R$</span>
-                  {cardIncomeValueByMonth?.toLocaleString("pt-BR", {
+                  {cardTotalIncome?.toLocaleString("pt-BR", {
                     minimumFractionDigits: 2,
                   })}
                 </div>
@@ -80,7 +74,7 @@ export default function OverviewCard({
                 <div>Despesas</div>
                 <div className="truncate">
                   <span className="dark:text-white/70 pr-1">R$</span>
-                  {cardExpenseValueByMonth?.toLocaleString("pt-BR", {
+                  {cardTotalExpense?.toLocaleString("pt-BR", {
                     minimumFractionDigits: 2,
                   })}
                 </div>
