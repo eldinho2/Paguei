@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import CarouselComponent from "@/components/CarouselComponent";
 import { ChevronLeftIcon } from "lucide-react";

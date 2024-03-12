@@ -96,6 +96,9 @@ export const useCreateIncome = () => {
       }
 
       queryClient.setQueryData(['incomes-by-month', month], (old: any) => {
+        if (!old || old.length === 0) {
+          return [addedIncome];
+        }
         return [...old, addedIncome]
       })
       

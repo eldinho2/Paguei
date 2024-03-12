@@ -12,13 +12,13 @@ type CreateExpenseProps = {
   description: string;
   fixed: boolean;
   userId: string;
-  date?: string;
+  createdAt?: string;
 };
 
 
 async function CreateExpense(
   newToken: string,
-  { amount, description, fixed, userId, date }: CreateExpenseProps
+  { amount, description, fixed, userId, createdAt }: CreateExpenseProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -30,7 +30,11 @@ async function CreateExpense(
     description,
     fixed,
     userId,
+    createdAt
   };
+
+  console.log("Data to send:", data);
+  
 
   try {
   const response = await axios
@@ -78,13 +82,19 @@ export const useCreateExpense = () => {
     mutationFn: (variables: CreateExpenseProps) => CreateExpense(newToken!, variables),
     onSuccess: (data, variables) => {
 
+      
+      console.log("Variables:", variables);
+
       const addedExpense = {
         ...variables,
         id: data,
       }
 
       queryClient.setQueryData(['expenses-by-month', month], (old: any) => {
-        return [...old, addedExpense]
+        if (!old || old.length === 0) {
+          return [addedExpense];
+        }
+        return [...old, addedExpense];
       })
       
     },

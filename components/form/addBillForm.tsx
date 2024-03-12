@@ -28,6 +28,7 @@ import { useSession } from "next-auth/react"
 
 import { useCreateExpense } from '@/utils/queries/create-expense'
 import { useCreateIncome } from '@/utils/queries/create-income'
+import { CalendarForm } from "./CalendarForm";
 
 const formSchema = z.object({
   description: z.string(),
@@ -40,7 +41,7 @@ const formSchema = z.object({
     .positive(),
   fixed: z.boolean(),
   userId: z.string(),
-  date: z.string(),
+  createdAt: z.string(),
 });
 
 type AddBillFormProps = {
@@ -60,7 +61,7 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
   }
 
   const { data: session } = useSession()
-  const userEmail = session?.user?.email;
+  const userEmail = session?.user?.email || "";
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,11 +69,13 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
       description: "",
       fixed: false,
       userId: userEmail,
-      date: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {    
+  async function onSubmit(values: z.infer<typeof formSchema>) { 
+    console.log(values);
+       
     handleAddBIll(values);
   }
 
@@ -82,7 +85,7 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col justify-center">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 flex flex-col justify-center">
         <FormField
           control={form.control}
           name="description"
@@ -105,7 +108,7 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
             <FormItem>
               <FormLabel htmlFor="amount">Valor</FormLabel>
               <FormControl>
-                <Input {...field} onChange={event => field.onChange(Number(event.target.value))} id="amount" type="number" />
+                <Input {...field} onFocus={() => {if (field.value === 0) {field.onChange("")}}} onChange={event => field.onChange(Number(event.target.value))} id="amount" type="number" />
               </FormControl>
               <FormMessage>{form.formState.errors.amount?.message}</FormMessage>
             </FormItem>
@@ -116,7 +119,7 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
           name="fixed"
           render={() => (
             <FormItem>
-              <FormLabel htmlFor="fixed"></FormLabel>
+              <FormLabel className="mr-4" htmlFor="fixed">{bill === 'expense' ? 'Despesa:' : 'Renda:'}</FormLabel>
               <FormControl>
               <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -145,7 +148,15 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
             </FormItem>
           )}
         />
-        {
+        <FormField
+          control={form.control}
+          name="userId"
+          render={() => (
+            <FormItem>
+              <CalendarForm addForm={form} bill={bill} />
+            </FormItem>
+          )}
+          />{
           amount > 0 ? (
             <DialogClose type="submit" className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 p-2">
               Adicionar

@@ -57,8 +57,11 @@ export function TableBodyContent<TData, TValue>({
                 data-state={row.getIsSelected() && "selected"}
                 className="p-2 max-w-28 truncate"
               >
-                {row.getVisibleCells().map((cell: { id: Key | null | undefined; column: { columnDef: { cell: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | ComponentType<any> | null | undefined; }; }; getContext: () => any; }) => (
-                  <TableCell className="p-2 max-w-28 truncate" key={cell.id}>
+                {row.getVisibleCells().map((cell: any) => (
+                  <TableCell
+                    className="p-2 max-w-28 truncate"
+                    key={cell.id}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

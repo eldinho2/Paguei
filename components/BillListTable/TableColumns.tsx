@@ -63,7 +63,7 @@ export const columns: ColumnDef<TypeBill>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="">{row.getValue("description")}</div>,
+    cell: ({ row }) => <div className="">{row.getValue("description") || `Sem Nome`}</div>,
   },
   {
     accessorKey: "amount",

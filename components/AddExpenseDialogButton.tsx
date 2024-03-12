@@ -20,7 +20,7 @@ export default function AddExpenseDialogButton() {
       <DialogTrigger>
         <MinusCircle className="rounded-full bg-red-700 text-black shadow-lg" />
       </DialogTrigger>
-      <DialogContent className="max-w-[300px] flex flex-col items-center justify-center">
+      <DialogContent className="max-w-[315px] h-[600px] flex flex-col items-center justify-center">
         <DialogHeader>
           <DialogTitle>Adicionar Despesa</DialogTitle>
         </DialogHeader>
