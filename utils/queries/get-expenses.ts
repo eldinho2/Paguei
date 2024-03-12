@@ -30,21 +30,27 @@ async function getExpensesFunction(token: any, email: any) {
 
 export function useGetExpenses() {
   const { data: session } = useSession()
-  const email = session?.user.email
-  //console.log(session?.user.user.email);
   const token = session?.user.accessToken
-  //console.log(session?.user.email);
-  //console.log(session?.user.accessToken);
-  
+  const email = session?.user.email
+  const [newToken, setNewToken] = useState<string | undefined>(token)
 
+  useEffect(() => {
+    const checkToken = async () => {
+      const updatedToken = await JwtIsExpired(token, session?.user)
+      setNewToken(updatedToken)
+    }
+
+    checkToken()
+  }, [token, session])
 
   const { data, error, isLoading } = useQuery({
     queryFn: () => {
       if (token && email) {
-        return getExpensesFunction(token, email)
+        return getExpensesFunction(newToken, email)
       }
     },
     queryKey: ["expenses"],
+    enabled: session != null && newToken != null && newToken !== "",
   })
 
   return { data, error, isLoading }
