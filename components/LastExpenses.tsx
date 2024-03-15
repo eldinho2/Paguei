@@ -29,12 +29,7 @@ export default function LastExpenses({ expenses }: OverviewCardProps) {
     );
   }
 
-  const lastExpenses = expenses
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    )
-    .slice(0, 7);
+  const lastExpenses = expenses.toReversed().slice(0, 7);  
 
   return (
     <Card className="w-[284px] m-4 shadow-lg">
@@ -54,7 +49,7 @@ export default function LastExpenses({ expenses }: OverviewCardProps) {
             <CardContent key={expense.id} className="flex items-center">
               <div className="flex flex-col justify-between w-full">
                 <div className="flex justify-between w-full">
-                    <p className="truncate flex-1">{expense.description}</p>
+                    <p className="truncate flex-1">{expense.description || 'Sem Nome'}</p>
                   <div className="flex truncate">
                     <span className="dark:text-white/70 pr-1">R$</span>
                       {expense.amount.toLocaleString("pt-BR", {

@@ -1,6 +1,7 @@
 import { PlusCircle, MinusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type OverviewCardProps = {
   expenses: {
@@ -37,14 +38,6 @@ export default function OverviewCard({
 
   return (
     <div>
-      {isLoading ? (
-        <Card className="w-72 h-full m-4 shadow-lg p-0">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold">Visão geral</CardTitle>
-          </CardHeader>
-          Carregando...
-        </Card>
-      ) : (
         <Card className="w-72 m-4 shadow-lg">
           <CardHeader>
             <CardTitle className="text-xl font-semibold">Visão geral</CardTitle>
@@ -56,11 +49,17 @@ export default function OverviewCard({
               </span>
               <div className="flex justify-between w-full gap-1">
                 <div>Receitas</div>
-                <div className="truncate">
+                <div className="flex items-center truncate">
                   <span className="dark:text-white/70 pr-1">R$</span>
-                  {cardTotalIncome?.toLocaleString("pt-BR", {
-                    minimumFractionDigits: 2,
-                  })}
+                  {
+                    isLoading ? (
+                      <Skeleton className="h-4 w-[70px]" />
+                    ) : (
+                      cardTotalIncome?.toLocaleString("pt-BR", {
+                        minimumFractionDigits: 2,
+                      })
+                    )
+                  }
                 </div>
               </div>
             </CardContent>
@@ -72,17 +71,22 @@ export default function OverviewCard({
               </span>
               <div className="flex justify-between w-full gap-1">
                 <div>Despesas</div>
-                <div className="truncate">
+                <div className="flex items-center truncate">
                   <span className="dark:text-white/70 pr-1">R$</span>
-                  {cardTotalExpense?.toLocaleString("pt-BR", {
-                    minimumFractionDigits: 2,
-                  })}
+                  {
+                    isLoading ? (
+                      <Skeleton className="h-4 w-[70px]" />
+                    ) : (
+                      cardTotalExpense?.toLocaleString("pt-BR", {
+                        minimumFractionDigits: 2,
+                      })
+                    )
+                  }
                 </div>
               </div>
             </CardContent>
           </Link>
         </Card>
-      )}
     </div>
   );
 }

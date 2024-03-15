@@ -29,9 +29,7 @@ export default function LastIncomes({ incomes }: OverviewCardProps) {
     );
   }
 
-  const lastIncomes = incomes.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  ).slice(0, 7);
+  const lastIncomes = incomes.toReversed().slice(0, 7)
 
   return (
     <Card className="w-[284px] m-4 shadow-lg">
@@ -51,7 +49,7 @@ export default function LastIncomes({ incomes }: OverviewCardProps) {
             <CardContent key={income.id} className="flex items-center">
               <div className="flex flex-col justify-between w-full">
                 <div className="flex justify-between w-full">
-                    <p className="truncate flex-1">{income.description}</p>
+                    <p className="truncate flex-1">{income.description || 'Sem Nome'}</p>
                   <div className="flex truncate">
                     <span className="dark:text-white/70 pr-1">R$</span>
                       {income.amount.toLocaleString("pt-BR", {

@@ -77,6 +77,13 @@ export const useDeleteExpense = () => {
         return old.filter((expense: any) => expense.id !== variables.id)
       })
 
+      queryClient.setQueryData(['expenses'], (old: any) => {
+        if (!old || old.length === 0) {
+          return [];
+        }
+        return old.filter((expense: any) => expense.id !== variables.id)
+      })
+
       return { cache2 }
 
     },

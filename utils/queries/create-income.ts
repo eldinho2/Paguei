@@ -94,6 +94,14 @@ export const useCreateIncome = () => {
         }
         return [...old, addedIncome]
       })
+
+      
+      queryClient.setQueryData(['incomes'], (old: any) => {        
+        if (!old || old.length === 0) {
+          return [addedIncome];
+        }
+        return [...old, addedIncome];
+      })
       
     },
     onError: (error) => {

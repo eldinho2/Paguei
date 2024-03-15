@@ -90,6 +90,19 @@ export const useCreateExpense = () => {
         }
         return [...old, addedExpense];
       })
+
+      const cache = queryClient.getQueryData(['expenses']);
+
+      console.log('cache', cache);
+      
+
+      queryClient.setQueryData(['expenses'], (old: any) => {
+        if (!old || old.length === 0) {
+          return [addedExpense];
+        }
+        return [...old, addedExpense];
+      })
+      
       
     },
     onError: (error) => {
