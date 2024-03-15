@@ -82,14 +82,7 @@ export const useCreateIncome = () => {
   const { mutateAsync: addIncome } = useMutation({
     mutationFn: (variables: CreateIncomeProps) => CreateIncome(newToken!, variables),
     onSuccess: (data, variables, content) => {
-
-      console.log("data", data);
-      console.log("variables", variables);
-      console.log("content", content);
-      
-      const cachedData = queryClient.getQueryData(['incomes-by-month', month]);
-      console.log("cachedData", cachedData);
-
+   
       const addedIncome = {
         ...variables,
         id: data,

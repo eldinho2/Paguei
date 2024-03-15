@@ -70,6 +70,9 @@ export const useDeleteIncome = () => {
       const cache2 = queryClient.getQueryData(['incomes-by-month', month])
       
       queryClient.setQueryData(['incomes-by-month', month], (old: any) => {
+        if (!old || old.length === 0) {
+          return [];
+        }
         return old.filter((expense: any) => expense.id !== variables.id)
       })
 

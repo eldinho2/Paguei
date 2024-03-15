@@ -1,8 +1,6 @@
-"use client";
-
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -30,13 +28,20 @@ export function CalendarForm({ bill, addForm }:CalendarFormProps ) {
     return newDate;
   });
   
+  useEffect(() => {
+    if (!date) {
+      setDate(new Date());
+    }
+    else {
+      addForm.setValue('createdAt', date.toISOString());
+    }
+  }, [date, addForm]);
+
   if (bill === "expense") {
     bill = "despesa";
   } else {
     bill = "receita";
   }
-  
-  date ? addForm.setValue('createdAt', date.toISOString()) : setDate(new Date());
   
   return (
     <div className="flex flex-col justify-center items-center">

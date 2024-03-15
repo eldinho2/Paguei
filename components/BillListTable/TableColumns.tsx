@@ -43,7 +43,17 @@ declare module "@tanstack/table-core" {
 export const columns: ColumnDef<TypeBill>[] = [
   {
     accessorKey: "fixed",
-    header: "Fixa",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="px-0 mx-0 overflow-hidden whitespace-nowrap text-left text-ellipsis"
+        >
+          Fixa
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const value = row.getValue("fixed") ? "Sim" : "Não";
       return <div className="capitalize px-0">{value}</div>;

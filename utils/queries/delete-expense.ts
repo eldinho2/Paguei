@@ -69,7 +69,11 @@ export const useDeleteExpense = () => {
     onSuccess: (_, variables) => {
       const cache2 = queryClient.getQueryData(['expenses-by-month', month])
       
+
       queryClient.setQueryData(['expenses-by-month', month], (old: any) => {
+        if (!old || old.length === 0) {
+          return [];
+        }
         return old.filter((expense: any) => expense.id !== variables.id)
       })
 

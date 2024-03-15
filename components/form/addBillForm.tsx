@@ -29,16 +29,11 @@ import { useSession } from "next-auth/react"
 import { useCreateExpense } from '@/utils/queries/create-expense'
 import { useCreateIncome } from '@/utils/queries/create-income'
 import { CalendarForm } from "./CalendarForm";
+import { CalculatorAmountInput } from "./CalculatorAmountInput";
 
 const formSchema = z.object({
   description: z.string(),
-  amount: z
-    .number({
-      required_error: "O campo de 'Valor' é obrigatório.",
-      invalid_type_error: "O campo de 'Valor' deve ser um número.",
-    })
-    .min(1, { message: 'O campo de "Valor" não pode ser vazio.' })
-    .positive(),
+  amount: z.number().min(1).positive({message: 'O valor deve ser maior que 0'}),
   fixed: z.boolean(),
   userId: z.string(),
   createdAt: z.string(),
@@ -95,7 +90,7 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
                 bill === "expense" ? "Despesa" : "Renda"
               }</FormLabel>
               <FormControl>
-                <Input {...field} id="description" />
+                <Input {...field} className="w-[270px]" id="description" />
               </FormControl>
               <FormMessage>{form.formState.errors.description?.message}</FormMessage>
             </FormItem>
@@ -106,11 +101,13 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
           name="amount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="amount">Valor</FormLabel>
+              <span>Valor</span>
               <FormControl>
-                <Input {...field} onFocus={() => {if (field.value === 0) {field.onChange("")}}} onChange={event => field.onChange(Number(event.target.value))} id="amount" type="number" />
+                <div>
+                <Input {...field} className="hidden" />
+                <CalculatorAmountInput addForm={form} field={field} />
+                </div>
               </FormControl>
-              <FormMessage>{form.formState.errors.amount?.message}</FormMessage>
             </FormItem>
           )}
         />
