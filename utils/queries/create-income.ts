@@ -1,25 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
-import { QueryCache } from '@tanstack/react-query'
-import { useSelectedMonth } from '@/stores/selectedMonth-store';
 
 type CreateIncomeProps = {
+  createdAt: any;
   amount: number;
   description: string;
   fixed: boolean;
   userId: string;
-  date?: string;
 };
 
 
 async function CreateIncome(
   newToken: string,
-  { amount, description, fixed, userId, date }: CreateIncomeProps
+  { amount, description, fixed, userId, createdAt }: CreateIncomeProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -31,6 +29,7 @@ async function CreateIncome(
     description,
     fixed,
     userId,
+    createdAt,
   };
 
   try {
@@ -55,18 +54,11 @@ async function CreateIncome(
 
 export const useCreateIncome = () => {
   const queryClient = useQueryClient();
-  const month = useSelectedMonth((state) => state.month)
-
-
 
   const { data: session } = useSession();
   const token = session?.user.accessToken;
-
-  
   
   const [newToken, setNewToken] = useState<string | undefined>(token);
-
-  
 
   useEffect(() => {
     const checkToken = async () => {
@@ -88,20 +80,31 @@ export const useCreateIncome = () => {
         id: data,
       }
 
-      queryClient.setQueryData(['incomes-by-month', month], (old: any) => {
-        if (!old || old.length === 0) {
-          return [addedIncome];
-        }
-        return [...old, addedIncome]
-      })
+      const selectedMonth = new Date(variables.createdAt?.toString()).getMonth() + 1;
 
-      
-      queryClient.setQueryData(['incomes'], (old: any) => {        
-        if (!old || old.length === 0) {
-          return [addedIncome];
+      if (variables.fixed) {
+        for (let month = 1; month <= 12; month++) {
+          updateIncomeDataForMonth(queryClient, month, addedIncome);
         }
-        return [...old, addedIncome];
-      })
+      } else {
+        updateIncomeDataForMonth(queryClient, selectedMonth, addedIncome);
+      }
+
+      function updateIncomeDataForMonth(queryClient: QueryClient, month: number, addedIncome: CreateIncomeProps) {
+        queryClient.setQueryData(['incomes-by-month', month], (old: any) => {
+          if (!old || old.length === 0) {
+            return [addedIncome];
+          }
+          return [...old, addedIncome]
+        })
+      
+        queryClient.setQueryData(['incomes'], (old: any) => {        
+          if (!old || old.length === 0) {
+            return [addedIncome];
+          }
+          return [...old, addedIncome];
+        })
+      }
       
     },
     onError: (error) => {

@@ -1,20 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
-import { useSelectedMonth } from '@/stores/selectedMonth-store';
 
-type CreateExpenseProps = {
-  amount: number;
-  description: string;
-  fixed: boolean;
-  userId: string;
-  createdAt?: string;
-};
-
+  type CreateExpenseProps = {
+    createdAt: any;
+    amount: number;
+    description: string;
+    fixed: boolean;
+    userId: string;
+  };
 
 async function CreateExpense(
   newToken: string,
@@ -56,8 +54,6 @@ async function CreateExpense(
 
 export const useCreateExpense = () => {
   const queryClient = useQueryClient();
-  const month = useSelectedMonth((state) => state.month)
-
 
   const { data: session } = useSession();
   const token = session?.user.accessToken;  
@@ -84,25 +80,31 @@ export const useCreateExpense = () => {
         id: data,
       }
 
-      queryClient.setQueryData(['expenses-by-month', month], (old: any) => {
-        if (!old || old.length === 0) {
-          return [addedExpense];
+      const selectedMonth = new Date(variables.createdAt?.toString()).getMonth() + 1;
+
+      if (variables.fixed) {
+        for (let month = 1; month <= 12; month++) {
+          updateIncomeDataForMonth(queryClient, month, addedExpense);
         }
-        return [...old, addedExpense];
-      })
+      } else {
+        updateIncomeDataForMonth(queryClient, selectedMonth, addedExpense);
+      }
 
-      const cache = queryClient.getQueryData(['expenses']);
-
-      console.log('cache', cache);
+      function updateIncomeDataForMonth(queryClient: QueryClient, month: number, addedExpense: CreateExpenseProps) {
+        queryClient.setQueryData(['expenses-by-month', month], (old: any) => {
+          if (!old || old.length === 0) {
+            return [addedExpense];
+          }
+          return [...old, addedExpense]
+        })
       
-
-      queryClient.setQueryData(['expenses'], (old: any) => {
-        if (!old || old.length === 0) {
-          return [addedExpense];
-        }
-        return [...old, addedExpense];
-      })
-      
+        queryClient.setQueryData(['expenses'], (old: any) => {        
+          if (!old || old.length === 0) {
+            return [addedExpense];
+          }
+          return [...old, addedExpense];
+        })
+      }
       
     },
     onError: (error) => {
