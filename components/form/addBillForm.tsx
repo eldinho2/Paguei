@@ -87,7 +87,7 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
           render={({ field }) => (
             <FormItem>
               <FormLabel htmlFor="description">{
-                bill === "expense" ? "Despesa" : "Renda"
+                bill === "expense" ? "Nome da Despesa" : "Nome da Renda"
               }</FormLabel>
               <FormControl>
                 <Input {...field} className="w-[270px]" id="description" />
