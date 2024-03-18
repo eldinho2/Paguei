@@ -1,18 +1,20 @@
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
+import { useGetIncomes } from "@/utils/queries/get-incomes";
 
-type OverviewCardProps = {
-  incomes: {
-    id: string;
-    amount: number;
-    description: string;
-    fixed: boolean;
-    createdAt: string;
-    userId: string;
-  }[];
-};
+type IncomeType = {
+  id: number;
+  description: string;
+  amount: number;
+  fixed: boolean;
+  createdAt: string;
+}
 
-export default function LastIncomes({ incomes }: OverviewCardProps) {
+export default function LastIncomes() {
+  const { data: incomes } = useGetIncomes();
+
   if (!incomes || incomes.length === 0) {
     return (
       <Card className="w-[284px] m-4 shadow-lg">
@@ -45,7 +47,7 @@ export default function LastIncomes({ incomes }: OverviewCardProps) {
             <p className="text-center">Nenhuma receita encontrada</p>
           </CardContent>
         ) : (
-          lastIncomes.map((income) => (
+          lastIncomes.map((income: IncomeType) => (
             <CardContent key={income.id} className="flex items-center">
               <div className="flex flex-col justify-between w-full">
                 <div className="flex justify-between w-full">

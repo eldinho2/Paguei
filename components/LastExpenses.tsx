@@ -1,18 +1,20 @@
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MinusCircle } from "lucide-react";
+import { useGetExpenses } from '@/utils/queries/get-expenses';
 
-type OverviewCardProps = {
-  expenses: {
-    id: string;
-    amount: number;
-    description: string;
-    fixed: boolean;
-    createdAt: string;
-    userId: string;
-  }[];
-};
+type ExpenseType = {
+  id: number;
+  description: string;
+  amount: number;
+  fixed: boolean;
+  createdAt: string;
+}
 
-export default function LastExpenses({ expenses }: OverviewCardProps) {
+export default function LastExpenses() {
+  const { data: expenses } = useGetExpenses();
+
   if (!expenses || expenses.length === 0) {
     return (
       <Card className="w-[284px] m-4 shadow-lg">
@@ -45,7 +47,7 @@ export default function LastExpenses({ expenses }: OverviewCardProps) {
             <p className="text-center">Nenhuma despesa encontrada</p>
           </CardContent>
         ) : (
-          lastExpenses.map((expense) => (
+            lastExpenses.map((expense: ExpenseType) => (
             <CardContent key={expense.id} className="flex items-center">
               <div className="flex flex-col justify-between w-full">
                 <div className="flex justify-between w-full">

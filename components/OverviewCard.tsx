@@ -1,38 +1,18 @@
+'use client'
+
 import { PlusCircle, MinusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
+import {useGetIncomesByMonth} from "@/utils/queries/get-incomes-by-month";
 
-type OverviewCardProps = {
-  expenses: {
-    id: string;
-    amount: number;
-    description: string;
-    fixed: boolean;
-    createdAt: string;
-    userId: string;
-  }[];
-  incomes: {
-    id: string;
-    amount: number;
-    description: string;
-    fixed: boolean;
-    createdAt: string;
-    userId: string;
-  }[];
 
-  isLoading: boolean;
-};
-interface ISelectedMonth {
-  month: number;
-  updateSelecteMonth: (month: number) => void;
-}
+export default function OverviewCard() {
+  const { data: expenses, isLoading: isLoading } = useGetExpensesByMonth();
+  const { data: incomes } = useGetIncomesByMonth();
 
-export default function OverviewCard({
-  expenses,
-  incomes,
-  isLoading,
-}: OverviewCardProps) {
+
   const cardTotalExpense = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
   const cardTotalIncome = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
 

@@ -1,3 +1,5 @@
+'use client'
+
 import ValueLabels from "./ui/ValueLabels";
 import {useGetExpensesByMonth} from '@/utils/queries/get-expenses-by-month'
 import {useGetIncomesByMonth} from '@/utils/queries/get-incomes-by-month'

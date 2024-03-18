@@ -1,9 +1,12 @@
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import * as React from "react";
 import { useTheme } from "next-themes";
 import { useSelectedMonth } from "@/stores/selectedMonth-store";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
 
 const DynamicChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -27,7 +30,9 @@ interface ISelectedMonth {
   updateSelecteMonth: (month: number) => void;
 }
 
-function MonthResume({ expenses, isLoading }: any) {
+function MonthResume() {
+  const { data: expenses, isLoading: isLoading } = useGetExpensesByMonth();
+
   const { theme } = useTheme();
 
   const month = useSelectedMonth((state: ISelectedMonth) => state.month);
