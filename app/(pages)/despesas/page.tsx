@@ -5,12 +5,10 @@ import CarouselComponent from "@/components/CarouselComponent";
 import { ChevronLeftIcon } from "lucide-react";
 import { ExpenseListTable } from "@/components/BillListTable/ExpensesListTable";
 import AddExpenseDialog from "@/components/AddExpenseDialogButton";
-
 import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
 
 export default function Despesas() {
-  const { data, isLoading } = useGetExpensesByMonth();
-
+  const { data, isLoading } = useGetExpensesByMonth();  
   return (
     <>
       <header className="fixed z-30 w-full flex justify-between items-center bg-[#252628]">
@@ -26,7 +24,7 @@ export default function Despesas() {
                   {isLoading
                     ? "Carregando..."
                     : data?.length === 0
-                    ? "Nenhuma receita..."
+                    ? "Nenhuma despesa..."
                     : `Total: R$ ${data
                         ?.reduce(
                           (acc: any, curr: { amount: any }) =>
