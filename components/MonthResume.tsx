@@ -31,33 +31,19 @@ interface ISelectedMonth {
 }
 
 function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
-  const [expensesDb, setExpensesDb] = useState(null);
-
-  const { data: expensesDb2, isLoading } = useGetExpensesByMonth();
-  
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setExpensesDb(expensesDb2);
-    }, 6000);
-
-    return () => clearTimeout(timeout);
-  }, [expensesDb2]);
-
   const { theme } = useTheme();
-
   const month = useSelectedMonth((state: ISelectedMonth) => state.month);
+
+  const { data: expensesDb, isLoading } = useGetExpensesByMonth();
 
   const LocalExpensesFilteredByMonth = LocalExpenses.filter((expense) => {
     const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
     return expenseMonth === month;
   })
 
-
   console.log('LocalExpensesFilteredByMonth', LocalExpensesFilteredByMonth);
   console.log('expensesDb', expensesDb);
   
-  
-
   const expenses = expensesDb || LocalExpensesFilteredByMonth;
 
   const expensesSorted = expenses?.sort(
