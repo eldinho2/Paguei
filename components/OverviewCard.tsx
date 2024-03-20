@@ -1,5 +1,3 @@
-'use client'
-
 import { PlusCircle, MinusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
@@ -11,7 +9,6 @@ import {useGetIncomesByMonth} from "@/utils/queries/get-incomes-by-month";
 export default function OverviewCard() {
   const { data: expenses, isLoading: isLoading } = useGetExpensesByMonth();
   const { data: incomes } = useGetIncomesByMonth();
-
 
   const cardTotalExpense = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
   const cardTotalIncome = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);

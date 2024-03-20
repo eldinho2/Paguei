@@ -1,5 +1,3 @@
-'use client'
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import * as React from "react";
 import { useTheme } from "next-themes";
@@ -7,6 +5,8 @@ import { useSelectedMonth } from "@/stores/selectedMonth-store";
 import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
+import { Bills } from '@/utils/db';
+import { useEffect, useState } from "react";
 
 const DynamicChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -30,12 +30,35 @@ interface ISelectedMonth {
   updateSelecteMonth: (month: number) => void;
 }
 
-function MonthResume() {
-  const { data: expenses, isLoading: isLoading } = useGetExpensesByMonth();
+function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
+  const [expensesDb, setExpensesDb] = useState(null);
+
+  const { data: expensesDb2, isLoading } = useGetExpensesByMonth();
+  
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setExpensesDb(expensesDb2);
+    }, 6000);
+
+    return () => clearTimeout(timeout);
+  }, [expensesDb2]);
 
   const { theme } = useTheme();
 
   const month = useSelectedMonth((state: ISelectedMonth) => state.month);
+
+  const LocalExpensesFilteredByMonth = LocalExpenses.filter((expense) => {
+    const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
+    return expenseMonth === month;
+  })
+
+
+  console.log('LocalExpensesFilteredByMonth', LocalExpensesFilteredByMonth);
+  console.log('expensesDb', expensesDb);
+  
+  
+
+  const expenses = expensesDb || LocalExpensesFilteredByMonth;
 
   const expensesSorted = expenses?.sort(
     (a: any, b: any) => a.amount - b.amount

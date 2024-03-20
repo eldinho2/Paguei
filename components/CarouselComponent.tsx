@@ -30,6 +30,7 @@ export default function CarouselComponent() {
   
 
   useEffect(() => {
+    updateSelectedMonth(currentMonth + 1)
     if (api) {
       setSelectedMonth(api.selectedScrollSnap() + 1)
       
@@ -38,7 +39,7 @@ export default function CarouselComponent() {
         updateSelectedMonth(selected)
       })
     }
-  }, [api, updateSelectedMonth])
+  }, [api, updateSelectedMonth, currentMonth])
   
 
   
@@ -46,10 +47,7 @@ export default function CarouselComponent() {
     if (api) {
       api.scrollTo(currentMonth, false)
     }
-  }
-
-  console.log(selectedMonth, currentMonth, "selectedMonth, currentMonth");
-  
+  }  
 
   return (
     <Carousel

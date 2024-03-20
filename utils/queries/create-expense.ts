@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
 
   type CreateExpenseProps = {
-    createdAt: any;
+    createdAt: string;
     amount: number;
     description: string;
     fixed: boolean;

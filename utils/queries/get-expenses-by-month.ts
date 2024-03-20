@@ -31,7 +31,6 @@ async function GetExpensesByMonth(newToken: any, email: any, month: any) {
 
 export function useGetExpensesByMonth() {
   const month = useSelectedMonth((state) => state.month)
-
   const { data: session } = useSession()
   const token = session?.user.accessToken
   const email = session?.user.email

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useSession } from "next-auth/react"
 import { JwtIsExpired } from "@/utils/jwt-is-expired"
+import { db } from "@/utils/db";
 
 async function getIncomesFunction(token: any, email: any) {
     try {
@@ -52,6 +53,12 @@ export function useGetIncomes() {
     queryKey: ["incomes"],
     enabled: session != null && newToken != null && newToken !== "",
   })
+
+  useEffect(() => {
+    if (data) {
+      db.incomes.bulkPut(data)
+    }
+  }, [data])
 
   return { data, error, isLoading }
 }

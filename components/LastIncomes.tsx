@@ -1,8 +1,7 @@
-'use client'
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
 import { useGetIncomes } from "@/utils/queries/get-incomes";
+import { Bills } from '@/utils/db';
 
 type IncomeType = {
   id: number;
@@ -12,8 +11,10 @@ type IncomeType = {
   createdAt: string;
 }
 
-export default function LastIncomes() {
-  const { data: incomes } = useGetIncomes();
+export default function LastIncomes({LocalIncomes}: {LocalIncomes: Bills[]}) {
+  const { data: incomesDb } = useGetIncomes();
+
+  const incomes = incomesDb || LocalIncomes;
 
   if (!incomes || incomes.length === 0) {
     return (
@@ -25,7 +26,9 @@ export default function LastIncomes() {
           <PlusCircle className="h-6 w-6 text-green-700" />
         </CardHeader>
         <CardContent>
-          <p className="text-center">Aguarde, carregando receitas...</p>
+        <p className="text-center">{
+            incomes && incomes.length === 0 ? "Nenhuma receita encontrada" : "Carregando..."
+          }</p>
         </CardContent>
       </Card>
     );
