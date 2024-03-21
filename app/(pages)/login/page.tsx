@@ -15,7 +15,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ModeToggle } from "@/components/ThemeToggle";
 import { useSession } from "next-auth/react"
-import { redirect } from "next/navigation";
 
 const schema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -29,10 +28,6 @@ type Inputs = z.infer<typeof schema>;
 
 export default function Login() {
   const { data: session, update } = useSession()
-  
-  if (session?.user) {
-    redirect("/dashboard")
-  }
 
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setGoogleLoading] = useState(false);

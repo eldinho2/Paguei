@@ -16,9 +16,6 @@ export default function Main() {
     <main className="w-full">
       <MainResume />
       <div className="flex flex-col justify-center items-center">
-        <div>
-          {navigator.onLine ? 'voce esta online' : 'Você está offline' }
-        </div>
         <Suspense fallback={<p>Carregando...</p>}>
           <MonthResume LocalExpenses={expenses || []}/>
           <OverviewCard />

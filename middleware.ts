@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   const session = await auth()
 
   const pathName = request.nextUrl.pathname;
-  if (pathName.startsWith("/dashboard")) {
+  if (pathName.startsWith("/")) {
     if (session) {
       return NextResponse.next();
     } else {
@@ -17,5 +17,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", '/'],
+  matcher: ["/"],
 };

@@ -10,40 +10,24 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   workboxOptions: {
     disableDevLogs: true,
   },
-  register: true, // register pwa
-  skipWaiting: true, // skip waiting for old service worker to be disabled
   runtimeCaching: [
-    // Cache all routes
+    //cache assets & data from external api
     {
-      urlPattern: /^https?.*/,
+      urlPattern: /.*/i,
       handler: "NetworkFirst",
       options: {
-        cacheName: "https-calls",
+        cacheName: "others", // cache name
         expiration: {
-          maxEntries: 200,
-          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
-        },
-        networkTimeoutSeconds: 20,
-      },
-    },
-    // Cache assets & data from external api
-    {
-      urlPattern: /dashboard.*/i,
-      handler: "NetworkFirst",
-      options: {
-        cacheName: "others",
-        expiration: {
-          maxEntries: 32,
+          maxEntries: 32, // max cache entries
           maxAgeSeconds: 24 * 60 * 60, // 24 hours
         },
-        networkTimeoutSeconds: 20,
+        networkTimeoutSeconds: 20, // fall back to cache if api does not response within 20 seconds
       },
     },
   ],
 });
 
-const nextConfig = {
-  transpilePackages: ['@mui/x-charts']
-}
-
-module.exports = withPWA(nextConfig)
+module.exports = withPWA({
+  reactStrictMode: true,
+  swcMinify: true,
+});

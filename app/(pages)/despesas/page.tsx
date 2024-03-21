@@ -15,7 +15,7 @@ export default function Despesas() {
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-center text-white w-full px-2">
             <div className="flex items-center justify-start">
-              <Link href={"/dashboard"}>
+              <Link href={"/"}>
                 <ChevronLeftIcon />
               </Link>
               <div className="pl-8">

@@ -6,7 +6,7 @@ export default function AuthWithGoogle() {
   return (
     <button
       className="flex items-center gap-2 flex-1 justify-center"
-      onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+      onClick={() => signIn("google", { callbackUrl: "/" })}
     >
       <span className="w-4 h-4">
         <svg role="img" viewBox="0 0 24 24">

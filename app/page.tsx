@@ -1,10 +1,11 @@
-import { redirect } from "next/navigation"
+import Header from '@/components/Header'
+import Main from '@/components/Main'
 
 export default async function Home() {
-  redirect("/login")
   return (
     <div className=''>
-      index
+      <Header />
+      <Main />
     </div>
   )
 }
