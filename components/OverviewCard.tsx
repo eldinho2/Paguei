@@ -3,12 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
-import {useGetIncomesByMonth} from "@/utils/queries/get-incomes-by-month";
+import {useGetIncomesByMonth} from "@/utils/queries/get-incomes-by-month"
 
+export default function OverviewCard({ LocalExpenses, LocalIncomes }: any) {
+  const { data: expensesDb, isLoading: isLoading } = useGetExpensesByMonth();
+  const { data: incomesDb } = useGetIncomesByMonth();
 
-export default function OverviewCard() {
-  const { data: expenses, isLoading: isLoading } = useGetExpensesByMonth();
-  const { data: incomes } = useGetIncomesByMonth();
+  const expenses = expensesDb || LocalExpenses;
+  const incomes = incomesDb || LocalIncomes;
 
   const cardTotalExpense = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
   const cardTotalIncome = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);

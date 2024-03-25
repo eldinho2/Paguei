@@ -8,6 +8,7 @@ import MonthResume from "./MonthResume";
 import { Suspense } from 'react';
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/utils/db";
+
 export default function Main() {
   const expenses = useLiveQuery(() => db.expenses.toArray())
   const incomes = useLiveQuery(() => db.incomes.toArray())
@@ -18,7 +19,7 @@ export default function Main() {
       <div className="flex flex-col justify-center items-center">
         <Suspense fallback={<p>Carregando...</p>}>
           <MonthResume LocalExpenses={expenses || []}/>
-          <OverviewCard />
+          <OverviewCard LocalExpenses={expenses || []} LocalIncomes={incomes || []} />
           <LastExpenses LocalExpenses={expenses || []} />
           <LastIncome LocalIncomes={incomes || []} />
         </Suspense>

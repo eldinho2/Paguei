@@ -34,7 +34,7 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
   const { theme } = useTheme();
   const month = useSelectedMonth((state: ISelectedMonth) => state.month);
 
-  const { data: expensesDb, isLoading } = useGetExpensesByMonth();
+  let { data: expensesDb, isLoading } = useGetExpensesByMonth();
 
   const LocalExpensesFilteredByMonth = LocalExpenses.filter((expense) => {
     const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
@@ -58,7 +58,7 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
 
   if (isLoading) {
     return (
-      <Card className="w-72 h-full m-4 shadow-lg p-0">
+      <Card className="w-[290px] h-full m-4 shadow-lg p-0">
         <CardHeader className="flex p-4">
           <CardTitle className="text-xl font-semibold">
             Despesas de {selectedMonth}
@@ -81,7 +81,7 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
 
   if (expenses && expenses.length === 0) {
     return (
-      <Card className="w-72 h-full m-4 shadow-lg p-0">
+      <Card className="w-[290px] h-full m-4 shadow-lg p-0">
         <CardHeader className="flex p-4">
           <CardTitle className="text-xl font-semibold">
             Despesas de {selectedMonth}
@@ -143,7 +143,7 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
                       fontFamily: "Inter, sans-serif",
                       fontWeight: 600,
                       offsetY: 73,
-                      color: theme === "dark" ? "white" : "black",
+                      color: theme === "dark" ? "white" : "gray",
                       formatter: function (val) {
                         const brl = parseFloat(val).toLocaleString("pt-BR", {
                           style: "currency",
@@ -167,7 +167,7 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
               fontFamily: "Inter, sans-serif",
               fontWeight: 12,
               labels: {
-                colors: theme === "dark" ? "white" : "black",
+                colors: theme === "dark" ? "white" : "grey",
               },
             },
             dataLabels: {

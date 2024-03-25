@@ -6,6 +6,7 @@ import { ChevronLeftIcon } from "lucide-react";
 import { ExpenseListTable } from "@/components/BillListTable/ExpensesListTable";
 import AddExpenseDialog from "@/components/AddExpenseDialogButton";
 import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
+import { SelectYearBill } from "@/components/SelectYearBill";
 
 export default function Despesas() {
   const { data, isLoading } = useGetExpensesByMonth();  
@@ -13,8 +14,8 @@ export default function Despesas() {
     <>
       <header className="fixed z-30 w-full flex justify-between items-center bg-[#252628]">
         <div className="flex flex-col w-full">
-          <div className="flex justify-between items-center text-white w-full px-2">
-            <div className="flex items-center justify-start">
+          <div className="flex justify-between items-center text-white w-full px-2 gap-3">
+            <div className="flex w-full items-center justify-start">
               <Link href={"/"}>
                 <ChevronLeftIcon />
               </Link>
@@ -36,6 +37,9 @@ export default function Despesas() {
                         })}`}
                 </p>
               </div>
+            </div>
+            <div>
+              <SelectYearBill /> 
             </div>
             <div className="flex gap-4">
               <AddExpenseDialog />
