@@ -40,9 +40,6 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
     const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
     return expenseMonth === month;
   })
-
-  console.log('LocalExpensesFilteredByMonth', LocalExpensesFilteredByMonth);
-  console.log('expensesDb', expensesDb);
   
   const expenses = expensesDb || LocalExpensesFilteredByMonth;
 

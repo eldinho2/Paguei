@@ -81,6 +81,7 @@ export const useCreateIncome = () => {
       }
 
       const selectedMonth = new Date(variables.createdAt?.toString()).getMonth() + 1;
+      const year = new Date(variables.createdAt?.toString()).getFullYear();
 
       if (variables.fixed) {
         for (let month = 1; month <= 12; month++) {
@@ -91,7 +92,7 @@ export const useCreateIncome = () => {
       }
 
       function updateIncomeDataForMonth(queryClient: QueryClient, month: number, addedIncome: CreateIncomeProps) {
-        queryClient.setQueryData(['incomes-by-month', month], (old: any) => {
+        queryClient.setQueryData(['incomes-by-month', month, year], (old: any) => {
           if (!old || old.length === 0) {
             return [addedIncome];
           }

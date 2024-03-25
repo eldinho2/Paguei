@@ -27,6 +27,9 @@ import { TableBodyContent } from "./TableBodyContent";
 import { TablePagination } from "./TablePagination";
 import { TableFilterColumns } from "./TableFilterColumns";
 
+import { liveQuery } from "dexie";
+import { db } from "@/utils/db";
+
 type BillListTableProps = {
   bill: "expense" | "income";
 };
@@ -51,9 +54,16 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
+  const LocalExpenses = liveQuery(() => db.expenses.toArray());
+  const LocalIncomes = liveQuery(() => db.incomes.toArray());
+
   function useDataByMonth(bill: string) {
-    const expenses = useGetExpensesByMonth();
-    const incomes = useGetIncomesByMonth();
+
+    const expensesDb = useGetExpensesByMonth();    
+    const incomesDb = useGetIncomesByMonth();
+
+    const expenses = expensesDb || LocalExpenses;
+    const incomes = incomesDb || LocalIncomes;
 
     return bill === "expense" ? expenses : incomes;
   }
@@ -130,7 +140,7 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   if (data && data.length === 0) {
     return (
       <div className="mt-96 flex justify-center items-center">
-        <p>Nenhuma despesa encontrada</p>
+        <p>Nenhuma {bill === 'expense' ? 'despesa' : 'receita'} encontrada</p>
       </div>
     );
   }

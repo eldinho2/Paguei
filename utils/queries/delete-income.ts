@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
 import { useSelectedMonth } from '@/stores/selectedMonth-store';
+import { useSelectedYear } from "@/stores/selectedYear-store";
 
 type DeleteIncomeProps = {
   id : string;
@@ -40,8 +41,8 @@ async function DeleteIncome( newToken: string, { id }: DeleteIncomeProps) {
 }
 
 export const useDeleteIncome = () => {
-  //const queryClient = useQueryClient();
   const month = useSelectedMonth((state) => state.month)
+  const year = useSelectedYear((state) => state.year)
 
 
   const { data: session } = useSession();
@@ -67,9 +68,7 @@ export const useDeleteIncome = () => {
   const { mutateAsync: deleteIncome } = useMutation({
     mutationFn: (variables: DeleteIncomeProps) => DeleteIncome(newToken || "", variables),
     onSuccess: (_, variables) => {
-      const cache2 = queryClient.getQueryData(['incomes-by-month', month])
-      
-      queryClient.setQueryData(['incomes-by-month', month], (old: any) => {
+      queryClient.setQueryData(['incomes-by-month', month, year], (old: any) => {
         if (!old || old.length === 0) {
           return [];
         }
@@ -82,9 +81,6 @@ export const useDeleteIncome = () => {
         }
         return old.filter((expense: any) => expense.id !== variables.id)
       })
-
-      return { cache2 }
-
     },
     onError: (error) => {
       console.error("Mutation error:", error);

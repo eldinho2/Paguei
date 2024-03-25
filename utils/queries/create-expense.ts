@@ -5,6 +5,7 @@ import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
+import { db } from "@/utils/db";
 
   type CreateExpenseProps = {
     createdAt: string;
@@ -81,6 +82,7 @@ export const useCreateExpense = () => {
       }
 
       const selectedMonth = new Date(variables.createdAt?.toString()).getMonth() + 1;
+      const year = new Date(variables.createdAt?.toString()).getFullYear();
 
       if (variables.fixed) {
         for (let month = 1; month <= 12; month++) {
@@ -91,7 +93,7 @@ export const useCreateExpense = () => {
       }
 
       function updateIncomeDataForMonth(queryClient: QueryClient, month: number, addedExpense: CreateExpenseProps) {
-        queryClient.setQueryData(['expenses-by-month', month], (old: any) => {
+        queryClient.setQueryData(['expenses-by-month', month, year], (old: any) => {
           if (!old || old.length === 0) {
             return [addedExpense];
           }
@@ -105,6 +107,8 @@ export const useCreateExpense = () => {
           return [...old, addedExpense];
         })
       }
+
+      db.expenses.put(addedExpense);
       
     },
     onError: (error) => {
