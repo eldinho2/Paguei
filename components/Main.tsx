@@ -1,13 +1,15 @@
 'use client'
 
-import MainResume from "./MainResume";
-import OverviewCard from "./OverviewCard";
-import LastExpenses from "./LastExpenses";
-import LastIncome from "./LastIncomes";
-import MonthResume from "./MonthResume";
+const MainResume = lazy(() => import ("./MainResume"));
+const OverviewCard = lazy(() => import ("./OverviewCard"));
+const LastExpenses = lazy(() => import ("./LastExpenses"));
+const LastIncome = lazy(() => import ("./LastIncomes"));
+const MonthResume = lazy(() => import ("./MonthResume"));
+
 import { Suspense } from 'react';
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/utils/db";
+import { lazy } from 'react';
 
 export default function Main() {
   const expenses = useLiveQuery(() => db.expenses.toArray())
