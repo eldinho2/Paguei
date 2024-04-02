@@ -44,17 +44,11 @@ export default function CarouselComponent() {
     }
   }, [api, updateSelectedMonth, currentMonth, selectedMonth])
   
-
-  
   const handleClick = () => {
     if (api) {
       api.scrollTo(currentMonth, false)
     }
   }  
-
-  console.log(storedMonth);
-  
-  
 
   return (
     <Carousel
