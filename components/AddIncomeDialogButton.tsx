@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { PlusCircle } from "lucide-react";
-import AddBillForm from "./form/AddBillForm";
+import AddBillForm from "@/components/form/AddBillForm";
 
 export default function AddIncomeDialogButton() {
   return (

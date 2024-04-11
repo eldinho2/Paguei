@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { MinusCircle } from "lucide-react";
-import AddBillForm from "./form/AddBillForm";
+import AddBillForm from "@/components/form/AddBillForm";
 
 
 export default function AddExpenseDialogButton() {
