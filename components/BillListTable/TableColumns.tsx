@@ -32,6 +32,7 @@ declare module "@tanstack/table-core" {
   interface TableMeta<TData extends RowData> {
     billType: "expense" | "income";
     handleDeleteBill: (billType: string, id: string) => void;
+    handleUpdateBill: (billType: string, id: string) => void;
     handleDropdownItemClick: (payment: TypeBill) => void;
     open: boolean;
     setOpen: (value: boolean) => void;
@@ -128,7 +129,9 @@ export const columns: ColumnDef<TypeBill>[] = [
               >
                 Ver Detalhes
               </DropdownMenuItem>
-              <DropdownMenuItem>Editar</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => table.options?.meta?.handleUpdateBill?.(table.options?.meta?.billType, id)}
+              >Editar</DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => table.options?.meta?.handleDeleteBill?.(table.options?.meta?.billType, id)}
               >

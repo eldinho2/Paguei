@@ -19,6 +19,9 @@ import { useGetIncomesByMonth } from "@/utils/queries/get-incomes-by-month";
 import { useDeleteExpense } from "@/utils/queries/delete-expense";
 import { useDeleteIncome } from "@/utils/queries/delete-income";
 
+import { useUpdateExpense } from "@/utils/queries/update-expense";
+//import { useUpdateIncome } from "@/utils/queries/update-income";
+
 import { columns } from "./TableColumns";
 import { BillsDetailsDialog } from "./BillDetailsDialog";
 
@@ -29,6 +32,7 @@ import { TableFilterColumns } from "./TableFilterColumns";
 
 import { liveQuery } from "dexie";
 import { db } from "@/utils/db";
+import { UpdateBillForm } from "../form/UpdateBillForm";
 
 type BillListTableProps = {
   bill: "expense" | "income";
@@ -53,6 +57,7 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const [updateIsOpen, setUpdateIsOpen] = useState(false);
 
   const LocalExpenses = liveQuery(() => db.expenses.toArray());
   const LocalIncomes = liveQuery(() => db.incomes.toArray());
@@ -72,11 +77,25 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   const { deleteExpense } = useDeleteExpense();
   const { deleteIncome } = useDeleteIncome();
 
+  const { updateExpense } = useUpdateExpense();
+  //const { updateIncome } = useUpdateIncome();
+
   const handleDeleteBill = (billType: string, id: string) => {
     if (billType === "expense") {
       deleteExpense({ id });
     } else {
       deleteIncome({ id });
+    }
+  };
+
+  const handleUpdateBill = (billType: string, id: string) => {
+    if (billType === "expense") {
+      console.log("updateExpense", { id });
+      setUpdateIsOpen(true)
+      //updateExpense({ id });
+    } else {
+      console.log("updateIncome", { id });
+      // updateIncome({ id });
     }
   };
 
@@ -91,6 +110,7 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
     meta: {
       billType: bill,
       handleDeleteBill: (billType, id) => handleDeleteBill(billType, id),
+      handleUpdateBill: (billType, id) => handleUpdateBill(billType, id),
       handleDropdownItemClick: (payment) => handleDropdownItemClick(payment),
       open,
       setOpen,
@@ -112,6 +132,10 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
       rowSelection,
     },
   });
+
+  if (updateIsOpen) {
+    return <UpdateBillForm bill={bill} />
+  }
 
   if (isLoading) {
     return (

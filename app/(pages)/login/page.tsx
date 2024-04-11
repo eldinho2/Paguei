@@ -1,4 +1,5 @@
 "use client";
+
 import { Loader } from "lucide-react";
 import AuthWithGoogle from "@/components/AuthWithGoogle";
 import * as React from "react";
