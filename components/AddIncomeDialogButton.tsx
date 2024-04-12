@@ -1,14 +1,13 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 
 import { PlusCircle } from "lucide-react";
-import AddBillForm from "@/components/form/AddBillForm";
+//import AddBillForm from "@/components/form/AddBillForm";
 
 export default function AddIncomeDialogButton() {
   return (
@@ -20,7 +19,6 @@ export default function AddIncomeDialogButton() {
         <DialogHeader>
           <DialogTitle>Adicionar Receita</DialogTitle>
         </DialogHeader>
-        <AddBillForm bill="income" />
       </DialogContent>
     </Dialog>
   );

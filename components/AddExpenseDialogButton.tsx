@@ -6,12 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
-  DialogFooter,
 } from "@/components/ui/dialog";
 
 import { MinusCircle } from "lucide-react";
-import AddBillForm from "@/components/form/AddBillForm";
+//import AddBillForm from "@/components/form/AddBillForm";
 
 
 export default function AddExpenseDialogButton() {
@@ -24,7 +22,6 @@ export default function AddExpenseDialogButton() {
         <DialogHeader>
           <DialogTitle>Adicionar Despesa</DialogTitle>
         </DialogHeader>
-        <AddBillForm bill="expense" />
       </DialogContent>
     </Dialog>
   );
