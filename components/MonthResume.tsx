@@ -55,7 +55,7 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
 
   if (isLoading) {
     return (
-      <Card className="w-[290px] h-full m-4 shadow-lg p-0">
+      <Card className="w-[290px] h-[240px] m-4 shadow-lg p-0">
         <CardHeader className="flex p-4">
           <CardTitle className="text-xl font-semibold">
             Despesas de {selectedMonth}
@@ -78,7 +78,7 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
 
   if (expenses && expenses.length === 0) {
     return (
-      <Card className="w-[290px] h-full m-4 shadow-lg p-0">
+      <Card className="w-[290px] h-[240px] m-4 shadow-lg p-0">
         <CardHeader className="flex p-4">
           <CardTitle className="text-xl font-semibold">
             Despesas de {selectedMonth}
@@ -92,7 +92,7 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
   }
 
     return (
-    <Card className="w-72 h-full m-4 shadow-lg p-0">
+    <Card className="w-72 h-[240px] m-4 shadow-lg p-0">
       <CardHeader className="flex p-4">
         <CardTitle className="text-xl font-semibold">
         Despesas de {selectedMonth}

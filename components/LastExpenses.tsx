@@ -15,7 +15,7 @@ export default function LastExpenses({ LocalExpenses }: { LocalExpenses: Bills[]
   let { data: expensesDb } = useGetExpenses();
 
   const expenses = expensesDb || LocalExpenses;
-
+  
   if (!expenses || expenses.length === 0) {
     return (
       <Card className="w-[284px] m-4 shadow-lg">
@@ -34,7 +34,7 @@ export default function LastExpenses({ LocalExpenses }: { LocalExpenses: Bills[]
     );
   }
 
-  const lastExpenses = expenses.toReversed();  
+  const lastExpenses = expenses.toReversed().slice(0, 7)
 
   return (
     <Card className="w-[284px] m-4 shadow-lg">

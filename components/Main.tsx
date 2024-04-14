@@ -9,12 +9,11 @@ import MonthResume from "./MonthResume";
 import { Suspense } from 'react';
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/utils/db";
-import { lazy } from 'react';
 
 export default function Main() {
   const expenses = useLiveQuery(() => db.expenses.toArray())
   const incomes = useLiveQuery(() => db.incomes.toArray())
-
+  
   return (
     <main className="w-full">
       <MainResume />

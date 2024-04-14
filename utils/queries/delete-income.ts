@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
 import { useSelectedMonth } from '@/stores/selectedMonth-store';
 import { useSelectedYear } from "@/stores/selectedYear-store";
+import { db } from "@/utils/db";
 
 type DeleteIncomeProps = {
   id : string;
@@ -81,6 +82,8 @@ export const useDeleteIncome = () => {
         }
         return old.filter((expense: any) => expense.id !== variables.id)
       })
+
+      db.incomes.delete(variables.id)
     },
     onError: (error) => {
       console.error("Mutation error:", error);

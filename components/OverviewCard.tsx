@@ -6,7 +6,7 @@ import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
 import {useGetIncomesByMonth} from "@/utils/queries/get-incomes-by-month"
 
 export default function OverviewCard({ LocalExpenses, LocalIncomes }: any) {
-  const { data: expensesDb, isLoading: isLoading } = useGetExpensesByMonth();
+  const { data: expensesDb } = useGetExpensesByMonth();
   const { data: incomesDb } = useGetIncomesByMonth();
 
   const expenses = expensesDb || LocalExpenses;
@@ -31,7 +31,7 @@ export default function OverviewCard({ LocalExpenses, LocalIncomes }: any) {
                 <div className="flex items-center truncate">
                   <span className="dark:text-white/70 pr-1">R$</span>
                   {
-                    isLoading ? (
+                    !incomes ? (
                       <Skeleton className="h-4 w-[70px]" />
                     ) : (
                       cardTotalIncome?.toLocaleString("pt-BR", {
@@ -53,7 +53,7 @@ export default function OverviewCard({ LocalExpenses, LocalIncomes }: any) {
                 <div className="flex items-center truncate">
                   <span className="dark:text-white/70 pr-1">R$</span>
                   {
-                    isLoading ? (
+                    !expenses ? (
                       <Skeleton className="h-4 w-[70px]" />
                     ) : (
                       cardTotalExpense?.toLocaleString("pt-BR", {
