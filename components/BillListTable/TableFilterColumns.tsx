@@ -13,7 +13,7 @@ export function TableFilterColumns({ table }:  any) {
     return (
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter description..."
+          placeholder="Pesquisar..."
           value={
             (table.getColumn("description")?.getFilterValue() as string) ?? ""
           }
@@ -24,8 +24,8 @@ export function TableFilterColumns({ table }:  any) {
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+            <Button variant="outline" className="ml-2">
+              Colunas <ChevronDownIcon className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
