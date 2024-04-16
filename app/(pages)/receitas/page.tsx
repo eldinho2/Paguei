@@ -39,11 +39,13 @@ export default function Receitas() {
                 </p>
               </div>
             </div>
-            <div>
-              <SelectYearBill />
-            </div>
-            <div>
-              <AddIncomeDialogButton />
+            <div className="flex flex-col items-center gap-3">
+              <div>
+                <SelectYearBill />
+              </div>
+              <div>
+                <AddIncomeDialogButton />
+              </div>
             </div>
           </div>
           <div className="flex justify-center items-center">
@@ -51,7 +53,7 @@ export default function Receitas() {
           </div>
         </div>
       </header>
-      <main className="pt-14">
+      <main className="pt-20">
         <ExpenseListTable bill="income" />
       </main>
     </>

@@ -9,7 +9,7 @@ import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
 import { SelectYearBill } from "@/components/SelectYearBill";
 
 export default function Despesas() {
-  const { data, isLoading } = useGetExpensesByMonth();  
+  const { data, isLoading } = useGetExpensesByMonth();
   return (
     <>
       <header className="fixed z-30 w-full flex justify-between items-center bg-[#252628]">
@@ -38,11 +38,13 @@ export default function Despesas() {
                 </p>
               </div>
             </div>
-            <div>
-              <SelectYearBill /> 
-            </div>
-            <div className="flex gap-4">
-              <AddExpenseDialog />
+            <div className="flex flex-col items-center gap-3">
+              <div>
+                <SelectYearBill />
+              </div>
+              <div>
+                <AddExpenseDialog />
+              </div>
             </div>
           </div>
           <div className="flex justify-center items-center">
@@ -50,7 +52,7 @@ export default function Despesas() {
           </div>
         </div>
       </header>
-      <main className="pt-14">
+      <main className="pt-20">
         <ExpenseListTable bill="expense" />
       </main>
     </>

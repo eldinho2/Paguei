@@ -35,6 +35,7 @@ const formSchema = z.object({
   description: z.string(),
   amount: z.number().min(1).positive({message: 'O valor deve ser maior que 0'}),
   fixed: z.boolean(),
+  installments: z.number().nonnegative({message: 'O valor deve ser maior ou igual a 0'}),
   userId: z.string(),
   createdAt: z.string(),
 });
@@ -63,6 +64,7 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
       amount: 0,
       description: "",
       fixed: false,
+      installments: 0,
       userId: userEmail,
       createdAt: new Date().toISOString(),
     },
@@ -70,12 +72,13 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) { 
     console.log(values);
-       
-    handleAddBIll(values);
+    
+    //handleAddBIll(values);
   }
 
   const amount = form.watch("amount");
   const fixed = form.watch("fixed");
+  const installments = form.watch("installments")
 
 
   return (
@@ -142,6 +145,19 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
               </DropdownMenuContent>
             </DropdownMenu>
               </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="installments"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="installments">Parcelas</FormLabel>
+              <FormControl>
+                <Input type="number" {...field} onChange={(event: { target: { value: string | number; }; }) => field.onChange(+event.target.value)} className="w-[270px]" id="installments" />
+              </FormControl>
+              <FormMessage>{form.formState.errors.installments?.message}</FormMessage>
             </FormItem>
           )}
         />
