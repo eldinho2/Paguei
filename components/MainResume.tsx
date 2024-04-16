@@ -4,9 +4,17 @@ import ValueLabels from "./ui/ValueLabels";
 import {useGetExpensesByMonth} from '@/utils/queries/get-expenses-by-month'
 import {useGetIncomesByMonth} from '@/utils/queries/get-incomes-by-month'
 
-export default function MainResume() {
-  const { data: expenses, isLoading: isLoadingExpenses } = useGetExpensesByMonth();
-  const { data: incomes, isLoading: isLoadingIncomes } = useGetIncomesByMonth();
+type MainResumeProps = {
+  LocalExpenses: [],
+  LocalIncomes: []
+}
+
+export default function MainResume({LocalExpenses, LocalIncomes}: MainResumeProps) {
+  const { data: expensesDb} = useGetExpensesByMonth();
+  const { data: incomesDb} = useGetIncomesByMonth();
+
+  const expenses = expensesDb || LocalExpenses;
+  const incomes = incomesDb || LocalIncomes;
 
   const totalIncomes = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) || "0,00";
   const totalExpenses = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) || "0,00";

@@ -28,7 +28,7 @@ export function BillsDetailsDialog({ open, setOpen, bill }: BillsDetailsDialogPr
         <DialogTrigger>
           <DialogClose />
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="w-80">
           <DialogHeader>
             <DialogTitle>Detalhes da Despesa</DialogTitle>
           </DialogHeader>

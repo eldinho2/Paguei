@@ -9,6 +9,7 @@ import { db } from "@/utils/db";
 
   type CreateExpenseProps = {
     createdAt: string;
+    installments: number;
     amount: number;
     description: string;
     fixed: boolean;
@@ -17,7 +18,7 @@ import { db } from "@/utils/db";
 
 async function CreateExpense(
   newToken: string,
-  { amount, description, fixed, userId, createdAt }: CreateExpenseProps
+  { amount, description, fixed, userId, createdAt, installments }: CreateExpenseProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -29,7 +30,8 @@ async function CreateExpense(
     description,
     fixed,
     userId,
-    createdAt
+    createdAt,
+    installments
   };  
 
   try {

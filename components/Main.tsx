@@ -16,7 +16,7 @@ export default function Main() {
   
   return (
     <main className="w-full">
-      <MainResume />
+      <MainResume LocalExpenses={expenses || []} LocalIncomes={incomes || []} />
       <div className="flex flex-col justify-center items-center">
         <Suspense fallback={<p>Carregando...</p>}>
           <MonthResume LocalExpenses={expenses || []}/>

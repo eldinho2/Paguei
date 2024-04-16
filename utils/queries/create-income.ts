@@ -8,6 +8,7 @@ import { JwtIsExpired } from "@/utils/jwt-is-expired";
 
 type CreateIncomeProps = {
   createdAt: string;
+  installments: number;
   amount: number;
   description: string;
   fixed: boolean;
@@ -17,12 +18,12 @@ type CreateIncomeProps = {
 
 async function CreateIncome(
   newToken: string,
-  { amount, description, fixed, userId, createdAt }: CreateIncomeProps
+  { amount, description, fixed, userId, createdAt, installments }: CreateIncomeProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${newToken}`,
-  };
+  };  
 
   const data: Record<string, any> = {
     amount,
@@ -30,6 +31,7 @@ async function CreateIncome(
     fixed,
     userId,
     createdAt,
+    installments
   };
 
   try {
