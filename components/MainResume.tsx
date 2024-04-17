@@ -3,10 +3,12 @@
 import ValueLabels from "./ui/ValueLabels";
 import {useGetExpensesByMonth} from '@/utils/queries/get-expenses-by-month'
 import {useGetIncomesByMonth} from '@/utils/queries/get-incomes-by-month'
+import { Bills } from '@/utils/db';
+
 
 type MainResumeProps = {
-  LocalExpenses: [],
-  LocalIncomes: []
+  LocalExpenses: Bills[],
+  LocalIncomes: Bills[]
 }
 
 export default function MainResume({LocalExpenses, LocalIncomes}: MainResumeProps) {

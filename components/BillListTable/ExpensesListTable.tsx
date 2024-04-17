@@ -32,7 +32,6 @@ import { TableFilterColumns } from "./TableFilterColumns";
 
 import { liveQuery } from "dexie";
 import { db } from "@/utils/db";
-import { UpdateBillForm } from "../form/UpdateBillForm";
 
 type BillListTableProps = {
   bill: "expense" | "income";
@@ -134,7 +133,8 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   });
 
   if (updateIsOpen) {
-    return <UpdateBillForm bill={bill} />
+    console.log('edit');
+    
   }
 
   if (isLoading) {
