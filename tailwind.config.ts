@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss"
 
 const config = {
   darkMode: ["class"],
+  pinkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',

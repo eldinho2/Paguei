@@ -84,6 +84,38 @@
  
     --radius: 0.5rem;
   }
+
+  .pink {
+    --background: 330 100% 90%;
+    --background-2: 330 100% 90%;
+    --foreground: 0 0 0;
+
+    --card: 330 100% 92%;
+    --card-foreground: 0 0 0;
+
+    --popover: 330 100% 98%;
+    --popover-foreground: 0 0 0;
+
+    --primary: 330 100% 95%;
+    --primary-foreground: 0 0 0;
+
+    --secondary: 330 100% 90%;
+    --secondary-foreground: 0 0 0;
+
+    --muted: 330 100% 90%;
+    --muted-foreground: 0 0 0;
+
+    --accent: 330 100% 90%;
+    --accent-foreground: 0 0 0;
+
+    --destructive: 330 100% 90%;
+    --destructive-foreground: 0 0 0;
+
+    --border: 330 100% 85%;
+    --input: 330 100% 98%;
+    --ring: 330 100% 98%;
+}
+
  
   .dark {
     --background: 222.2 84% 1%;

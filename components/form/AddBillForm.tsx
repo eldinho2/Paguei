@@ -136,7 +136,7 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
               <FormControl>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <span className="rounded-md bg-black border border-grey/70 hover:border-white active:border-white focus:border-white p-2">
+                    <span className="rounded-md dark:bg-black bg-pink-100 border border-grey/70 hover:border-white active:border-white focus:border-white p-2">
                       {
                         parcelaFormIsOpen ? "Parcelada" : fixed ? "Fixa mensal" : "Não recorrente"
                       }

@@ -23,7 +23,7 @@ export function Providers({ props, children }: ProvidersProps) {
   return (
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
-        <NextThemesProvider {...props}>{children}</NextThemesProvider>
+        <NextThemesProvider themes={['pink', 'dark']} {...props}>{children}</NextThemesProvider>
       </QueryClientProvider>
     </SessionProvider>
   );

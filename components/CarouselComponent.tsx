@@ -64,7 +64,7 @@ export default function CarouselComponent() {
             <div className="flex items-center justify-center">
               <Card className="w-16 h-16 bg-transparent shadow-none border-none">
                 <CardContent className="flex aspect-square items-center justify-center p-0 m-0">
-                  <span className="text-1xl text-white font-semibold">{month}</span>
+                  <span className="text-1xl dark:text-white font-semibold">{month}</span>
                 </CardContent>
               </Card>
             </div>
@@ -72,8 +72,8 @@ export default function CarouselComponent() {
         ))}
       </CarouselContent>
       <div onClick={handleClick} className="absolute inset-0 bg-transparent"></div>
-      <CarouselPrevious variant='ghost' className=" text-white border-none h-6  hover:bg-transparent active:bg-white/65 hover:text-white" />
-      <CarouselNext variant='ghost' className=" text-white border-none h-6  hover:bg-transparent active:bg-white/65 hover:text-white" />
+      <CarouselPrevious variant='ghost' className=" dark:text-white border-none h-6  hover:bg-transparent active:bg-white/65 hover:text-white" />
+      <CarouselNext variant='ghost' className=" dark:text-white border-none h-6  hover:bg-transparent active:bg-white/65 hover:text-white" />
     </Carousel>
   )
 }

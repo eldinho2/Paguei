@@ -13,16 +13,16 @@ export default function Receitas() {
   const { data, isLoading } = useGetIncomesByMonth();
   return (
     <>
-      <header className="fixed z-30 w-full flex justify-between items-center bg-[#252628]">
+      <header className="fixed z-30 w-full flex justify-between items-center bg-pink-300 dark:bg-[#252628]">
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-center text-white w-full px-2 gap-3">
             <div className="flex w-full items-center justify-start">
               <Link href={"/"}>
-                <ChevronLeftIcon />
+                <ChevronLeftIcon className="dark:text-white/75 text-black/75" />
               </Link>
               <div className="pl-8">
-                <h1 className="font-semibold">Receitas</h1>
-                <p className="text-white/75">
+                <h1 className="font-semibold dark:text-white/75 text-black/75">Receitas</h1>
+                <p className="dark:text-white/75 text-black/75">
                   {isLoading
                     ? "Carregando..."
                     : data?.length === 0

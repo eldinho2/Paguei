@@ -12,7 +12,7 @@ export default function Despesas() {
   const { data, isLoading } = useGetExpensesByMonth();
   return (
     <>
-      <header className="fixed z-30 w-full flex justify-between items-center bg-[#252628]">
+      <header className="fixed z-30 w-full flex justify-between items-center bg-pink-300 dark:bg-[#252628]">
         <div className="flex flex-col w-full">
           <div className="flex justify-between items-center text-white w-full px-2 gap-3">
             <div className="flex w-full items-center justify-start">

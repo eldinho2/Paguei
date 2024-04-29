@@ -35,7 +35,7 @@ export function SelectYearBill() {
       }}
       defaultValue={String(selectedYear)}
     >
-      <SelectTrigger className="py-2 px-4 rounded border-2 border-white/50 text-white">
+      <SelectTrigger className="py-2 px-4 rounded border-2 border-white/50 dark:text-white/75 text-black/75">
         <div className="flex gap-2">
         <p>Ano:</p>
         <SelectValue placeholder="year" />
