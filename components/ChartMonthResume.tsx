@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
 import { Bills } from '@/utils/db';
-import { useEffect, useState } from "react";
 
 const DynamicChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -30,11 +29,11 @@ interface ISelectedMonth {
   updateSelecteMonth: (month: number) => void;
 }
 
-function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
+function ChartMonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
   const { theme } = useTheme();
   const month = useSelectedMonth((state: ISelectedMonth) => state.month);
 
-  let { data: expensesDb, isLoading } = useGetExpensesByMonth();
+  let { data: expensesDb } = useGetExpensesByMonth();
 
   const LocalExpensesFilteredByMonth = LocalExpenses.filter((expense) => {
     const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
@@ -46,14 +45,16 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
   const expensesSorted = expenses?.sort(
     (a: any, b: any) => a.amount - b.amount
   );
+
   const expensesNames = expensesSorted?.map(
     (expense: any) => expense.description
   );
+
   const expensesValues = expensesSorted?.map((expense: any) => expense.amount);
 
-  const selectedMonth = months[month - 1];
+  const selectedMonth = months[month - 1];  
 
-  if (isLoading) {
+  if (!expenses) {
     return (
       <Card className="w-[290px] h-[240px] m-4 shadow-lg p-0">
         <CardHeader className="flex p-4">
@@ -182,4 +183,4 @@ function MonthResume({ LocalExpenses }: { LocalExpenses: Bills[]}) {
     );
 }
 
-export default React.memo(MonthResume);
+export default React.memo(ChartMonthResume);

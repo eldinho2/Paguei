@@ -12,6 +12,7 @@ type Bill = {
   amount: number;
   fixed: boolean;
   createdAt: string;
+  expiresAt: string;
   updatedAt: string;
 };
 
@@ -35,27 +36,27 @@ export function BillsDetailsDialog({ open, setOpen, bill }: BillsDetailsDialogPr
           <div className="p-4 rounded shadow">
             <div className="space-y-2">
               <p className="text-sm">
-                <span className="font-semibold">Descrição:</span>
+                <span className="font-semibold">Descrição: </span>
                 {bill.description}
               </p>
               <p className="text-sm">
-                <span className="font-semibold">Valor:</span>
+                <span className="font-semibold">Valor: </span>
                 {bill.amount?.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
               </p>
               <p className="text-sm">
-                <span className="font-semibold">Fixa:</span>
+                <span className="font-semibold">Fixa: </span>
                 {bill.fixed ? "Despesa fixa" : "Despesa variável"}
               </p>
               <p className="text-sm">
-                <span className="font-semibold">Data de criação:</span>
+                <span className="font-semibold">Data de criação: </span>
                 {new Date(bill.createdAt).toLocaleString("pt-BR")}
               </p>
               <p className="text-sm">
-                <span className="font-semibold">Data de modificação:</span>
-                {new Date(bill.updatedAt).toLocaleString("pt-BR")}
+                <span className="font-semibold">Data de expiração: </span>
+                {new Date(bill.expiresAt).toLocaleString("pt-BR")}
               </p>
             </div>
           </div>

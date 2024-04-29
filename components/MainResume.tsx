@@ -1,42 +1,74 @@
-'use client'
+"use client";
 
 import ValueLabels from "./ui/ValueLabels";
-import {useGetExpensesByMonth} from '@/utils/queries/get-expenses-by-month'
-import {useGetIncomesByMonth} from '@/utils/queries/get-incomes-by-month'
-import { Bills } from '@/utils/db';
-
+import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
+import { useGetIncomesByMonth } from "@/utils/queries/get-incomes-by-month";
+import { Bills } from "@/utils/db";
+import Link from "next/link";
 
 type MainResumeProps = {
-  LocalExpenses: Bills[],
-  LocalIncomes: Bills[]
-}
+  LocalExpenses: Bills[];
+  LocalIncomes: Bills[];
+};
 
-export default function MainResume({LocalExpenses, LocalIncomes}: MainResumeProps) {
-  const { data: expensesDb} = useGetExpensesByMonth();
-  const { data: incomesDb} = useGetIncomesByMonth();
+export default function MainResume({
+  LocalExpenses,
+  LocalIncomes,
+}: MainResumeProps) {
+  const { data: expensesDb } = useGetExpensesByMonth();
+  const { data: incomesDb } = useGetIncomesByMonth();
 
   const expenses = expensesDb || LocalExpenses;
   const incomes = incomesDb || LocalIncomes;
 
-  const totalIncomes = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) || "0,00";
-  const totalExpenses = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 }) || "0,00";
+  const totalIncomes =
+    incomes
+      ?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0)
+      .toLocaleString("pt-BR", { minimumFractionDigits: 2 }) || "0,00";
+  const totalExpenses =
+    expenses
+      ?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0)
+      .toLocaleString("pt-BR", { minimumFractionDigits: 2 }) || "0,00";
 
-  let incomesTotal = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
-  let expensesTotal = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
+  let incomesTotal = incomes?.reduce(
+    (acc: any, curr: { amount: any }) => acc + curr.amount,
+    0
+  );
+  let expensesTotal = expenses?.reduce(
+    (acc: any, curr: { amount: any }) => acc + curr.amount,
+    0
+  );
 
   incomesTotal = incomesTotal !== undefined ? incomesTotal : 0;
   expensesTotal = expensesTotal !== undefined ? expensesTotal : 0;
 
-  let saldo = (incomesTotal - expensesTotal).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
+  let saldo = (incomesTotal - expensesTotal).toLocaleString("pt-BR", {
+    minimumFractionDigits: 2,
+  });
 
-  
   return (
     <section className="pt-16">
       <section className="flex justify-center pt-2 h-24 w-full bg-[#252628]">
         <div className="flex gap-4">
-          <ValueLabels label="Receita" value={totalIncomes} className="transform scale-90 translate-y-0 text-white/70" />
-          <ValueLabels label="Saldo" value={saldo} className="transform scale-100 translate-y-2 z-10 text-white" />
-          <ValueLabels label="Despesas" value={totalExpenses} className="transform scale-90 translate-y-0 text-white/70" />
+          <Link href="/receitas" className="text-white">
+            <ValueLabels
+              label="Receita"
+              value={totalIncomes}
+              className="transform scale-90 translate-y-0 text-white/70"
+            />
+          </Link>
+          <ValueLabels
+            label="Saldo"
+            value={saldo}
+            className="transform scale-100 translate-y-2 z-10 text-white"
+          />
+          <Link href="/despesas" className="text-white">
+            <ValueLabels
+              label="Despesas"
+              value={totalExpenses}
+              className="transform scale-90 translate-y-0 text-white/70"
+            />
+          </Link>
         </div>
       </section>
     </section>

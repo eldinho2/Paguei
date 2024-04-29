@@ -4,7 +4,7 @@ import MainResume from "./MainResume";
 import OverviewCard from "./OverviewCard";
 import LastExpenses from "./LastExpenses";
 import LastIncome from "./LastIncomes";
-import MonthResume from "./MonthResume";
+import MonthResume from "./ChartMonthResume";
 
 import { Suspense } from 'react';
 import { useLiveQuery } from "dexie-react-hooks";
