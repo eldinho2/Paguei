@@ -29,8 +29,9 @@ import { TypeBill } from "./TableColumns";
 import { TableBodyContent } from "./TableBodyContent";
 import { TablePagination } from "./TablePagination";
 import { TableFilterColumns } from "./TableFilterColumns";
+import { useSelectedMonth } from "@/stores/selectedMonth-store";
 
-import { liveQuery } from "dexie";
+import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/utils/db";
 
 type BillListTableProps = {
@@ -58,26 +59,37 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   const [rowSelection, setRowSelection] = useState({});
   const [updateIsOpen, setUpdateIsOpen] = useState(false);
 
-  const LocalExpenses = liveQuery(() => db.expenses.toArray());
-  const LocalIncomes = liveQuery(() => db.incomes.toArray());
+  const month = useSelectedMonth((state) => state.month);
 
   function useDataByMonth(bill: string) {
 
-    const expensesDb = useGetExpensesByMonth();    
-    const incomesDb = useGetIncomesByMonth();
+    const LocalExpenses = useLiveQuery(() => db.expenses.toArray());
+    const LocalIncomes = useLiveQuery(() => db.incomes.toArray());
 
-    const expenses = expensesDb || LocalExpenses;
-    const incomes = incomesDb || LocalIncomes;
+    const LocalExpensesFilteredByMonth = LocalExpenses?.filter((expense) => {
+      const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
+      return expenseMonth === month;
+    })
+
+    const LocalIncomesFilteredByMonth = LocalIncomes?.filter((income) => {
+      const incomeMonth = new Date(income.createdAt).getMonth() + 1;
+      return incomeMonth === month;
+    });
+
+    const { data: expensesDb } = useGetExpensesByMonth();    
+    const { data: incomesDb } = useGetIncomesByMonth();
+    
+    const expenses = expensesDb || LocalExpensesFilteredByMonth;
+    const incomes = incomesDb || LocalIncomesFilteredByMonth;
 
     return bill === "expense" ? expenses : incomes;
   }
-  let { data, isLoading } = useDataByMonth(bill);
+
+  let data = useDataByMonth(bill);
 
   const { deleteExpense } = useDeleteExpense();
   const { deleteIncome } = useDeleteIncome();
 
-  const { updateExpense } = useUpdateExpense();
-  //const { updateIncome } = useUpdateIncome();
 
   const handleDeleteBill = (billType: string, id: string) => {
     if (billType === "expense") {
@@ -137,7 +149,7 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
     
   }
 
-  if (isLoading) {
+  if (!data) {
     return (
       <div className="mt-96 flex justify-center items-center" role="status">
         <svg

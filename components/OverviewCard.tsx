@@ -4,13 +4,27 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
 import {useGetIncomesByMonth} from "@/utils/queries/get-incomes-by-month"
+import { useSelectedMonth } from "@/stores/selectedMonth-store";
 
 export default function OverviewCard({ LocalExpenses, LocalIncomes }: any) {
+  const month = useSelectedMonth((state) => state.month);
+
+
   const { data: expensesDb } = useGetExpensesByMonth();
   const { data: incomesDb } = useGetIncomesByMonth();
 
-  const expenses = expensesDb || LocalExpenses;
-  const incomes = incomesDb || LocalIncomes;
+  const LocalExpensesFilteredByMonth = LocalExpenses?.filter((expense: { createdAt: string | number | Date; }) => {
+    const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
+    return expenseMonth === month;
+  })
+
+  const LocalIncomesFilteredByMonth = LocalIncomes?.filter((income: { createdAt: string | number | Date; }) => {
+    const incomeMonth = new Date(income.createdAt).getMonth() + 1;
+    return incomeMonth === month;
+  });
+
+  const expenses = expensesDb || LocalExpensesFilteredByMonth;
+  const incomes = incomesDb || LocalIncomesFilteredByMonth;
 
   const cardTotalExpense = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
   const cardTotalIncome = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);

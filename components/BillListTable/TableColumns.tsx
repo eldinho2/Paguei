@@ -25,6 +25,7 @@ export type TypeBill = {
   fixed: boolean;
   userId: string;
   createdAt: string;
+  expiresAt: string;
   updatedAt: string;
 };
 
