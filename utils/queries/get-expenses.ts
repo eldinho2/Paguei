@@ -9,7 +9,7 @@ import { db } from "@/utils/db";
 
 async function getExpensesFunction(token: any, email: any) {
     try {
-    const response = await axios.get(`https://paguei-back-end.onrender.com/expenses/get-all-expenses/${email}`, {  
+    const response = await axios.get(`https://paguei-back-end.vercel.app/expenses/get-all-expenses/${email}`, {  
       headers: {
           Authorization: `Bearer ${token}`,
         },

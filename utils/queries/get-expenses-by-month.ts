@@ -10,7 +10,7 @@ import { useSelectedYear } from '@/stores/selectedYear-store';
 
 async function GetExpensesByMonth(newToken: any, email: any, month: any, year: any) {
   try{
-  const response = await axios.get(`https://paguei-back-end.onrender.com/expenses/get-expense-by-month/${month}/${year}/${email}`, {
+  const response = await axios.get(`https://paguei-back-end.vercel.app/expenses/get-expense-by-month/${month}/${year}/${email}`, {
     headers: {
         Authorization: `Bearer ${newToken}`,
       },

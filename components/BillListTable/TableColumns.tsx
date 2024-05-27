@@ -27,6 +27,7 @@ export type TypeBill = {
   createdAt: string;
   expiresAt: string;
   updatedAt: string;
+  installments: number;
 };
 
 declare module "@tanstack/table-core" {

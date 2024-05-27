@@ -11,7 +11,7 @@ export async function checkUser(email: string) {
   let userExists = false;
 
   await axios
-    .get(`https://paguei-back-end.onrender.com/users/user/${email}`)
+    .get(`https://paguei-back-end.vercel.app/users/user/${email}`)
     .then(function (response) {
       const result = response.data.result;
       userExists = result ? true : false;
@@ -27,7 +27,7 @@ export async function Registration(user: User) {
   let tokenAcess = "";
 
   await axios
-  .post("https://paguei-back-end.onrender.com/auth/register", user)
+  .post("https://paguei-back-end.vercel.app/auth/register", user)
   .then(function (response) {
     tokenAcess = response.data.result.token;
   })
@@ -42,7 +42,7 @@ export async function Login(user: User) {
   let tokenAcess = "";
 
   await axios
-    .post("https://paguei-back-end.onrender.com/auth/login", user)
+    .post("https://paguei-back-end.vercel.app/auth/login", user)
     .then(function (response) {
       tokenAcess = response.data.result.token;
     })

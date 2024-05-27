@@ -27,7 +27,7 @@ async function DeleteExpense( newToken: string, { id }: DeleteExpenseProps) {
 
   axios
     .post(
-      "https://paguei-back-end.onrender.com/expenses/delete-expense",
+      "https://paguei-back-end.vercel.app/expenses/delete-expense",
       data,
       {
         headers: headers,

@@ -33,7 +33,7 @@ async function UpdateExpense( newToken: string, { id, amount, description, fixed
 
   axios
     .put(
-      "https://paguei-back-end.onrender.com/expenses/update-expense",
+      "https://paguei-back-end.vercel.app/expenses/update-expense",
       data,
       {
         headers: headers,

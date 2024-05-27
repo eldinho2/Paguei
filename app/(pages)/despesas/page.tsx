@@ -22,19 +22,19 @@ export default function Despesas() {
               <div className="pl-8">
                 <h1 className="font-semibold">Despesas</h1>
                 <p className="text-white/75">
-                  {isLoading
+                  {isLoading || data === undefined
                     ? "Carregando..."
                     : data?.length === 0
                     ? "Nenhuma despesa..."
                     : `Total: R$ ${data
-                        ?.reduce(
-                          (acc: any, curr: { amount: any }) =>
-                            acc + curr.amount,
-                          0
-                        )
-                        .toLocaleString("pt-BR", {
-                          minimumFractionDigits: 2,
-                        })}`}
+                    ?.reduce(
+                      (acc: any, curr: { amount: any }) =>
+                        acc + curr.amount,
+                      0
+                    )
+                    .toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                    })}`}
                 </p>
               </div>
             </div>

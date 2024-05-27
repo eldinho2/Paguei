@@ -23,19 +23,19 @@ export default function Receitas() {
               <div className="pl-8">
                 <h1 className="font-semibold dark:text-white/75 text-black/75">Receitas</h1>
                 <p className="dark:text-white/75 text-black/75">
-                  {isLoading
+                {isLoading || data === undefined
                     ? "Carregando..."
                     : data?.length === 0
                     ? "Nenhuma receita..."
                     : `Total: R$ ${data
-                        ?.reduce(
-                          (acc: any, curr: { amount: any }) =>
-                            acc + curr.amount,
-                          0
-                        )
-                        .toLocaleString("pt-BR", {
-                          minimumFractionDigits: 2,
-                        })}`}
+                    ?.reduce(
+                      (acc: any, curr: { amount: any }) =>
+                        acc + curr.amount,
+                      0
+                    )
+                    .toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                    })}`}
                 </p>
               </div>
             </div>

@@ -29,8 +29,6 @@ export function CalculatorAmountInput({ addForm, field }: any) {
     if (display && addForm.getValues(field.name) !== newValue) {
       addForm.setValue(field.name, newValue);
     }
-  
-    console.log('field',field);
   }
   
   

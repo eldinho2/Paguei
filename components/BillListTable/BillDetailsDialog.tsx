@@ -14,6 +14,7 @@ type Bill = {
   createdAt: string;
   expiresAt: string;
   updatedAt: string;
+  installments: number;
 };
 
 type BillsDetailsDialogProps = {
@@ -22,7 +23,11 @@ type BillsDetailsDialogProps = {
   bill: Bill;
 };
 
-export function BillsDetailsDialog({ open, setOpen, bill }: BillsDetailsDialogProps) {
+export function BillsDetailsDialog({
+  open,
+  setOpen,
+  bill,
+}: BillsDetailsDialogProps) {
   return (
     <div>
       <Dialog open={open} onOpenChange={(value) => setOpen(value)}>
@@ -40,23 +45,24 @@ export function BillsDetailsDialog({ open, setOpen, bill }: BillsDetailsDialogPr
                 {bill.description}
               </p>
               <p className="text-sm">
-                <span className="font-semibold">Valor: </span>
+                <span className="font-semibold">{bill.expiresAt ? 'Valor da parcela ' : 'Valor '}</span>
                 {bill.amount?.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
               </p>
+              {bill.expiresAt && (
+                <p className="text-sm">
+                  <span className="font-semibold">Parcelas: </span>
+                </p>
+              )}
               <p className="text-sm">
-                <span className="font-semibold">Fixa: </span>
+                <span className="font-semibold">Tipo: </span>
                 {bill.fixed ? "Despesa fixa" : "Despesa variável"}
               </p>
               <p className="text-sm">
                 <span className="font-semibold">Data de criação: </span>
                 {new Date(bill.createdAt).toLocaleString("pt-BR")}
-              </p>
-              <p className="text-sm">
-                <span className="font-semibold">Data de expiração: </span>
-                {new Date(bill.expiresAt).toLocaleString("pt-BR")}
               </p>
             </div>
           </div>

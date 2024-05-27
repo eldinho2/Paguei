@@ -27,7 +27,7 @@ async function DeleteIncome( newToken: string, { id }: DeleteIncomeProps) {
 
   axios
     .post(
-      "https://paguei-back-end.onrender.com/incomes/delete-income",
+      "https://paguei-back-end.vercel.app/incomes/delete-income",
       data,
       {
         headers: headers,

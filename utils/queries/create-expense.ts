@@ -9,6 +9,7 @@ import { db } from "@/utils/db";
 
   type CreateExpenseProps = {
     createdAt: string;
+    expiresAt: string;
     installments: number;
     amount: number;
     description: string;
@@ -18,7 +19,7 @@ import { db } from "@/utils/db";
 
 async function CreateExpense(
   newToken: string,
-  { amount, description, fixed, userId, createdAt, installments }: CreateExpenseProps
+  { amount, description, fixed, userId, createdAt, expiresAt, installments }: CreateExpenseProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -31,13 +32,16 @@ async function CreateExpense(
     fixed,
     userId,
     createdAt,
-    installments
+    expiresAt,
+    installments,
   };  
 
+  amount.toFixed(2);
+  
   try {
   const response = await axios
     .post(
-      "https://paguei-back-end.onrender.com/expenses/create-expense",
+      "https://paguei-back-end.vercel.app/expenses/create-expense",
       data,
       {
         headers: headers,

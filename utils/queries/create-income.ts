@@ -5,9 +5,11 @@ import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
+import { db } from "@/utils/db";
 
 type CreateIncomeProps = {
   createdAt: string;
+  expiresAt: string;
   installments: number;
   amount: number;
   description: string;
@@ -18,7 +20,7 @@ type CreateIncomeProps = {
 
 async function CreateIncome(
   newToken: string,
-  { amount, description, fixed, userId, createdAt, installments }: CreateIncomeProps
+  { amount, description, fixed, userId, createdAt, expiresAt, installments }: CreateIncomeProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -31,12 +33,15 @@ async function CreateIncome(
     fixed,
     userId,
     createdAt,
-    installments
+    expiresAt,
+    installments,
   };
+
+  amount.toFixed(2);
 
   try {
     const response = await axios.post(
-      "https://paguei-back-end.onrender.com/incomes/create-income",
+      "https://paguei-back-end.vercel.app/incomes/create-income",
       data,
       {
         headers: headers,
@@ -109,6 +114,10 @@ export const useCreateIncome = () => {
         })
       }
       
+      console.log("addedIncome", addedIncome);
+      
+      db.incomes.put(addedIncome);
+
     },
     onError: (error) => {
       console.error("Mutation error:", error);

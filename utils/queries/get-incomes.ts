@@ -9,7 +9,7 @@ import { db } from "@/utils/db";
 
 async function getIncomesFunction(token: any, email: any) {
     try {
-    const response = await axios.get(`https://paguei-back-end.onrender.com/incomes/get-all-incomes/${email}`, {  
+    const response = await axios.get(`https://paguei-back-end.vercel.app/incomes/get-all-incomes/${email}`, {  
       headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -44,6 +44,7 @@ const formSchema = z.object({
     .nonnegative({ message: "O valor deve ser maior ou igual a 0" }),
   userId: z.string(),
   createdAt: z.string(),
+  expiresAt: z.string(),
 });
 
 type AddBillFormProps = {
@@ -79,9 +80,8 @@ export default function AddBillForm({ bill }: AddBillFormProps) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-
     handleAddBIll(values);
+    console.log(values);
   }
 
   const amount = form.watch("amount");
