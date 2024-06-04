@@ -28,8 +28,12 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 });
 
 module.exports = withPWA({
-  reactStrictMode: true,
-  swcMinify: true,
+  pwa: {
+    runtimeCaching,
+    buildExcludes: [/middleware-manifest.json$/],
+    reactStrictMode: true,
+    swcMinify: true,
+  },
     async headers() {
       return [
         {
