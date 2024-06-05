@@ -29,7 +29,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 
 module.exports = withPWA({
   pwa: {
-    runtimeCaching,
+    runtimeCaching: true,
     buildExcludes: [/middleware-manifest.json$/],
     reactStrictMode: true,
     swcMinify: true,
