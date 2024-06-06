@@ -7,13 +7,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { useState } from "react";
+
 import {
   ColumnDef,
   flexRender,
-  getCoreRowModel,
-  useReactTable,
 } from "@tanstack/react-table"
 import { ComponentType, JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal } from "react";
+
+import { BillsDetailsDialog } from "./BillDetailsDialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -26,7 +28,7 @@ export function TableBodyContent<TData, TValue>({
   data,
   table
 }: DataTableProps<TData, TValue>) {
-
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="rounded-md border w-[350px]">
@@ -61,6 +63,11 @@ export function TableBodyContent<TData, TValue>({
                   <TableCell
                     className="p-2 max-w-28 truncate"
                     key={cell.id}
+                    onClick={() => {
+                      console.log(cell.getContext().row.original);
+
+                      table.options?.meta?.handleDropdownItemClick?.(cell.getContext().row.original);
+                    }}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>

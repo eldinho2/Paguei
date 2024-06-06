@@ -114,33 +114,10 @@ export const columns: ColumnDef<TypeBill>[] = [
       const payment = row.original;
       const id = row.original.id;
 
+
+
       return (
-        <div className="p-0 m-0">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0 m-0">
-                <span className="sr-only">Open menu</span>
-                <DotsHorizontalIcon className="h-4 w-4 p-0 m-0" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Ações</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => table.options?.meta?.handleDropdownItemClick(payment)}
-              >
-                Ver Detalhes
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => table.options?.meta?.handleUpdateBill?.(table.options?.meta?.billType, id)}
-              >Editar</DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => table.options?.meta?.handleDeleteBill?.(table.options?.meta?.billType, id)}
-              >
-                Excluir
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <div className="h-8 w-8 p-0 m-0">
         </div>
       );
     },

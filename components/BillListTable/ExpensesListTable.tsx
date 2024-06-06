@@ -184,7 +184,7 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   if (data && data.length > 0) {
   return (
     <div className="mt-10 flex flex-col items-center justify-center">
-      <BillsDetailsDialog bill={dialogContent} open={open} setOpen={setOpen} />
+      <BillsDetailsDialog bill={dialogContent} open={open} setOpen={setOpen} table={table} />
       <TableFilterColumns table={table} />
       <TableBodyContent table={table} columns={columns} data={data} />
       <TablePagination table={table} />

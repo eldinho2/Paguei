@@ -11,7 +11,7 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 export function TableFilterColumns({ table }:  any) {
     return (
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4 max-w-72">
         <Input
           placeholder="Pesquisar..."
           value={

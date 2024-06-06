@@ -5,9 +5,12 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
+  DialogFooter,
 } from "@/components/ui/dialog";
+import { Button } from "../ui/button";
 
 type Bill = {
+  id: string;
   description: string;
   amount: number;
   fixed: boolean;
@@ -21,12 +24,14 @@ type BillsDetailsDialogProps = {
   open: boolean;
   setOpen: (value: boolean) => void;
   bill: Bill;
+  table: any;
 };
 
 export function BillsDetailsDialog({
   open,
   setOpen,
   bill,
+  table,
 }: BillsDetailsDialogProps) {
   return (
     <div>
@@ -36,7 +41,7 @@ export function BillsDetailsDialog({
         </DialogTrigger>
         <DialogContent className="w-80">
           <DialogHeader>
-            <DialogTitle>Detalhes da Despesa</DialogTitle>
+            <DialogTitle>Detalhes</DialogTitle>
           </DialogHeader>
           <div className="p-4 rounded shadow">
             <div className="space-y-2">
@@ -66,6 +71,17 @@ export function BillsDetailsDialog({
               </p>
             </div>
           </div>
+          <DialogFooter>
+          <DialogClose>
+            <Button
+              variant="destructive"
+              onClick={() => table.options?.meta?.handleDeleteBill?.(table.options?.meta?.billType, bill.id)}
+              
+            >
+              Excluir
+            </Button>
+          </DialogClose>
+        </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
