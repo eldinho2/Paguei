@@ -13,11 +13,12 @@ import {
 import { useSelectedMonth } from '@/stores/selectedMonth-store'
 
 type CalendarFormProps = {
-  bill: string,
+  bill: string | undefined,
   addForm: any
 }
 
 import { ptBR } from "date-fns/locale";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 export function CalendarForm({ bill, addForm }:CalendarFormProps ) {
   const month = useSelectedMonth(state => state.month)

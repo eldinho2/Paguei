@@ -9,7 +9,6 @@ import { db } from "@/utils/db";
 
 type CreateIncomeProps = {
   createdAt: string;
-  expiresAt: string;
   installments: number;
   amount: number;
   description: string;
@@ -20,7 +19,7 @@ type CreateIncomeProps = {
 
 async function CreateIncome(
   newToken: string,
-  { amount, description, fixed, userId, createdAt, expiresAt, installments }: CreateIncomeProps
+  { amount, description, fixed, userId, createdAt, installments }: CreateIncomeProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -33,7 +32,6 @@ async function CreateIncome(
     fixed,
     userId,
     createdAt,
-    expiresAt,
     installments,
   };
 

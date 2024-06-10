@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
@@ -7,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { PlusCircle } from "lucide-react";
-import AddBillForm from "@/components/form/AddBillForm";
+import { AddBillForm } from "@/components/form/AddBillForm";
 
 export default function AddIncomeDialogButton() {
   return (

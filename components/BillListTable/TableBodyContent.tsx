@@ -15,8 +15,6 @@ import {
 } from "@tanstack/react-table"
 import { ComponentType, JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal } from "react";
 
-import { BillsDetailsDialog } from "./BillDetailsDialog";
-
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];

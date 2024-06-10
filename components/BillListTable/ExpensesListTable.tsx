@@ -34,6 +34,8 @@ import { useSelectedMonth } from "@/stores/selectedMonth-store";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "@/utils/db";
 
+import { useEffect } from 'react';
+
 type BillListTableProps = {
   bill: "expense" | "income";
 };
@@ -149,7 +151,23 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
     
   }
 
-  if (!data) {
+
+  const [showSpinner, setShowSpinner] = useState(true);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (data) {
+      timeout = setTimeout(() => {
+        setShowSpinner(false);
+      }, 700);
+    } else {
+      setShowSpinner(true);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [data]);
+
+  if (showSpinner) {
     return (
       <div className="mt-96 flex justify-center items-center" role="status">
         <svg

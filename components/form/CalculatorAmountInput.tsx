@@ -31,18 +31,21 @@ export function CalculatorAmountInput({ addForm, field }: any) {
     }
   }
   
+  const handleClick = () => {
+    handleSetFieldValue(display);
+    setIsOpen((prev) => !prev)
+  }
   
 
   return (
     <Popover open={isOpen}>
       <PopoverTrigger>
-      <Button
-            variant={"outline"}
-            className="w-[270px] pl-3 text-left font-normal"
-            onClick={() => setIsOpen((prev) => !prev)}
+      <div
+            className="w-[270px] flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
+            onClick={() => handleClick()}
           >
             {display}
-          </Button> 
+      </div> 
           <span>{
             display[0] === '-' ? 'Adicione um valor positivo' : ''
             }</span>
