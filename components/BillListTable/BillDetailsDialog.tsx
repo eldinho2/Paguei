@@ -33,8 +33,6 @@ export function BillsDetailsDialog({
   bill,
   table,
 }: BillsDetailsDialogProps) {
-  console.log(bill);
-  88555
   const fullAmountValue = bill.amount * bill.installments;
 
   return (

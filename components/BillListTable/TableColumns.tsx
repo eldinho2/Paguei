@@ -107,19 +107,4 @@ export const columns: ColumnDef<TypeBill>[] = [
       );
     },
   },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row, table }) => {
-      const payment = row.original;
-      const id = row.original.id;
-
-
-
-      return (
-        <div className="h-8 w-8 p-0 m-0">
-        </div>
-      );
-    },
-  },
 ];
