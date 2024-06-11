@@ -21,12 +21,12 @@ export const FormInputInstallments = ({form}: FormInputProps) => {
         <FormControl>
           <Input
             type="number"
+            min="1"
+            step="1"
             {...field}
             onChange={(event: { target: { value: string | number } }) =>
-              field.onChange(+event.target.value)
+              field.onChange(event.target.value === "" ? "" : +event.target.value)
             }
-            className="w-[270px]"
-            id="installments"
           />
         </FormControl>
         <FormMessage>

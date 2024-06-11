@@ -33,7 +33,9 @@ const FormSchema = z.object({
     .min(1, { message: "O valor deve ser maior que 0" })
     .positive({ message: "O valor deve ser maior que 0" }),
   fixed: z.boolean(),
-  installments: z.number().positive({ message: "O valor deve ser maior que 1"}).min(1, { message: "O valor deve ser maior que 1"}),
+  installments: z.number()
+  .min(1, { message: "A parcela deve ser maior que 1" })
+  .nonnegative({ message: "O valor deve ser maior ou igual a 0" }),
   createdAt: z.string(),
   userId: z.string(),
 })
