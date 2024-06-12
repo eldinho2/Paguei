@@ -6,7 +6,6 @@ import { ChevronLeftIcon } from "lucide-react";
 import { ExpenseListTable } from "@/components/BillListTable/ExpensesListTable";
 import AddExpenseDialog from "@/components/AddExpenseDialogButton";
 import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
-import { SelectYearBill } from "@/components/SelectYearBill";
 
 export default function Despesas() {
   const { data, isLoading } = useGetExpensesByMonth();
@@ -39,9 +38,6 @@ export default function Despesas() {
               </div>
             </div>
             <div className="flex flex-col items-center gap-3">
-              <div>
-                <SelectYearBill />
-              </div>
               <div>
                 <AddExpenseDialog />
               </div>

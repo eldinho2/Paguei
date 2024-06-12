@@ -10,19 +10,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { db } from "@/utils/db"
-import { useLiveQuery } from "dexie-react-hooks";
 
 import { useSelectedYear } from "@/stores/selectedYear-store"
+import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month"
 
 export function SelectYearBill() {
 
-  const expenses = useLiveQuery(() => db.expenses.toArray(), [])
-
-  const years = expenses
-    ? expenses
-        .map((expense) => new Date(expense.createdAt).getFullYear())
-        .filter((value, index, self) => self.indexOf(value) === index)
+  const { data: expensesDb } = useGetExpensesByMonth();    
+  
+  const years = expensesDb
+    ? expensesDb
+        .map((expense: { createdAt: string | number | Date; }) => new Date(expense.createdAt).getFullYear())
+        .filter((value: any, index: any, self: string | any[]) => self.indexOf(value) === index)
     : []
 
   const { updateSelecteYear } = useSelectedYear()
@@ -43,7 +42,7 @@ export function SelectYearBill() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {years.map((year) => (
+          {years.map((year: number) => (
             <SelectItem key={year} value={String(year)}>
               {year}
             </SelectItem>

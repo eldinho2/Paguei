@@ -2,32 +2,15 @@ import { PlusCircle, MinusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetExpensesByMonth } from "@/utils/queries/get-expenses-by-month";
-import {useGetIncomesByMonth} from "@/utils/queries/get-incomes-by-month"
 import { useSelectedMonth } from "@/stores/selectedMonth-store";
 
-export default function OverviewCard({ LocalExpenses, LocalIncomes }: any) {
+import { billsDb } from '@/types/billsDb';
+
+export default function OverviewCard({ expensesDb, incomesDb }: billsDb) {
   const month = useSelectedMonth((state) => state.month);
 
-
-  const { data: expensesDb } = useGetExpensesByMonth();
-  const { data: incomesDb } = useGetIncomesByMonth();
-
-  const LocalExpensesFilteredByMonth = LocalExpenses?.filter((expense: { createdAt: string | number | Date; }) => {
-    const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
-    return expenseMonth === month;
-  })
-
-  const LocalIncomesFilteredByMonth = LocalIncomes?.filter((income: { createdAt: string | number | Date; }) => {
-    const incomeMonth = new Date(income.createdAt).getMonth() + 1;
-    return incomeMonth === month;
-  });
-
-  const expenses = expensesDb || LocalExpensesFilteredByMonth;
-  const incomes = incomesDb || LocalIncomesFilteredByMonth;
-
-  const cardTotalExpense = expenses?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
-  const cardTotalIncome = incomes?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
+  const cardTotalExpense = expensesDb?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
+  const cardTotalIncome = incomesDb?.reduce((acc: any, curr: { amount: any }) => acc + curr.amount, 0);
 
   return (
     <div>
@@ -45,7 +28,7 @@ export default function OverviewCard({ LocalExpenses, LocalIncomes }: any) {
                 <div className="flex items-center truncate">
                   <span className="dark:text-white/70 pr-1">R$</span>
                   {
-                    !incomes ? (
+                    !incomesDb ? (
                       <Skeleton className="h-4 w-[70px]" />
                     ) : (
                       cardTotalIncome?.toLocaleString("pt-BR", {
@@ -67,7 +50,7 @@ export default function OverviewCard({ LocalExpenses, LocalIncomes }: any) {
                 <div className="flex items-center truncate">
                   <span className="dark:text-white/70 pr-1">R$</span>
                   {
-                    !expenses ? (
+                    !expensesDb ? (
                       <Skeleton className="h-4 w-[70px]" />
                     ) : (
                       cardTotalExpense?.toLocaleString("pt-BR", {

@@ -5,7 +5,6 @@ import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
-import { db } from "@/utils/db";
 
   type CreateExpenseProps = {
     createdAt: string;
@@ -111,10 +110,7 @@ export const useCreateExpense = () => {
           }
           return [...old, addedExpense];
         })
-      }
-
-      db.expenses.put(addedExpense);
-      
+      }    
     },
     onError: (error) => {
       console.error("Mutation error:", error);

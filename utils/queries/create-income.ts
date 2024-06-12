@@ -5,7 +5,6 @@ import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
-import { db } from "@/utils/db";
 
 type CreateIncomeProps = {
   createdAt: string;
@@ -111,11 +110,6 @@ export const useCreateIncome = () => {
           return [...old, addedIncome];
         })
       }
-      
-      console.log("addedIncome", addedIncome);
-      
-      db.incomes.put(addedIncome);
-
     },
     onError: (error) => {
       console.error("Mutation error:", error);

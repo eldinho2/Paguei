@@ -32,7 +32,6 @@ import { TableFilterColumns } from "./TableFilterColumns";
 import { useSelectedMonth } from "@/stores/selectedMonth-store";
 
 import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "@/utils/db";
 
 import { useEffect } from 'react';
 
@@ -61,28 +60,15 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   const [rowSelection, setRowSelection] = useState({});
   const [updateIsOpen, setUpdateIsOpen] = useState(false);
 
-  const month = useSelectedMonth((state) => state.month);
+  //const month = useSelectedMonth((state) => state.month);
 
   function useDataByMonth(bill: string) {
-
-    const LocalExpenses = useLiveQuery(() => db.expenses.toArray());
-    const LocalIncomes = useLiveQuery(() => db.incomes.toArray());
-
-    const LocalExpensesFilteredByMonth = LocalExpenses?.filter((expense) => {
-      const expenseMonth = new Date(expense.createdAt).getMonth() + 1;
-      return expenseMonth === month;
-    })
-
-    const LocalIncomesFilteredByMonth = LocalIncomes?.filter((income) => {
-      const incomeMonth = new Date(income.createdAt).getMonth() + 1;
-      return incomeMonth === month;
-    });
 
     const { data: expensesDb } = useGetExpensesByMonth();    
     const { data: incomesDb } = useGetIncomesByMonth();
     
-    const expenses = expensesDb || LocalExpensesFilteredByMonth;
-    const incomes = incomesDb || LocalIncomesFilteredByMonth;
+    const expenses = expensesDb;
+    const incomes = incomesDb;
 
     return bill === "expense" ? expenses : incomes;
   }

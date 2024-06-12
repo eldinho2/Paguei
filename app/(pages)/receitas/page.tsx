@@ -5,7 +5,6 @@ import CarouselComponent from "@/components/CarouselComponent";
 import { ChevronLeftIcon } from "lucide-react";
 import AddIncomeDialogButton from "@/components/AddIncomeDialogButton";
 import { ExpenseListTable } from "@/components/BillListTable/ExpensesListTable";
-import { SelectYearBill } from "@/components/SelectYearBill";
 
 import { useGetIncomesByMonth } from "@/utils/queries/get-incomes-by-month";
 
@@ -40,9 +39,6 @@ export default function Receitas() {
               </div>
             </div>
             <div className="flex flex-col items-center gap-3">
-              <div>
-                <SelectYearBill />
-              </div>
               <div>
                 <AddIncomeDialogButton />
               </div>

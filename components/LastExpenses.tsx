@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MinusCircle } from "lucide-react";
-import { useGetExpenses } from '@/utils/queries/get-expenses';
-import { Bills } from '@/utils/db';
+import { billsDb } from '@/types/billsDb';
 
 type ExpenseType = {
   id: number;
@@ -11,12 +10,9 @@ type ExpenseType = {
   createdAt: string;
 }
 
-export default function LastExpenses({ LocalExpenses }: { LocalExpenses: Bills[] }) {
-  let { data: expensesDb } = useGetExpenses();
-
-  const expenses = expensesDb || LocalExpenses;
+export default function LastExpenses({ expensesDb }: billsDb) {
   
-  if (!expenses || expenses.length === 0) {
+  if (!expensesDb || expensesDb.length === 0) {
     return (
       <Card className="w-[284px] m-4 shadow-lg">
         <CardHeader className="flex flex-row justify-between items-center">
@@ -27,14 +23,14 @@ export default function LastExpenses({ LocalExpenses }: { LocalExpenses: Bills[]
         </CardHeader>
         <CardContent>
           <p className="text-center">{
-            expenses && expenses.length === 0 ? "Nenhuma despesa encontrada" : "Carregando..."
+            expensesDb && expensesDb.length === 0 ? "Nenhuma despesa encontrada" : "Carregando..."
           }</p>
         </CardContent>
       </Card>
     );
   }
 
-  const lastExpenses = expenses.toReversed().slice(0, 7)
+  const lastExpenses = expensesDb.toReversed().slice(0, 7)
 
   return (
     <Card className="w-[284px] m-4 shadow-lg">

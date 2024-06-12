@@ -7,24 +7,24 @@ import LastIncome from "./LastIncomes";
 import MonthResume from "./ChartMonthResume";
 
 import { Suspense } from 'react';
-import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "@/utils/db";
+import { useGetExpensesByMonth } from '@/utils/queries/get-expenses-by-month';
+import { useGetIncomesByMonth } from '@/utils/queries/get-incomes-by-month';
 
 export default function Main() {
-  const expenses = useLiveQuery(() => db.expenses.toArray())
-  const incomes = useLiveQuery(() => db.incomes.toArray())
-  
+  const { data: expensesDb } = useGetExpensesByMonth();    
+  const { data: incomesDb } = useGetIncomesByMonth();
+
   return (
-    <main className="w-full">
-      <MainResume LocalExpenses={expenses || []} LocalIncomes={incomes || []} />
-      <div className="flex flex-col justify-center items-center">
-        <Suspense fallback={<p>Carregando...</p>}>
-          <MonthResume LocalExpenses={expenses || []}/>
-          <OverviewCard LocalExpenses={expenses || []} LocalIncomes={incomes || []} />
-          <LastExpenses LocalExpenses={expenses || []} />
-          <LastIncome LocalIncomes={incomes || []} />
-        </Suspense>
-      </div>
-    </main>
+    <Suspense fallback={<p>Carregando...</p>}>
+      <main className="w-full">
+        <MainResume expensesDb={expensesDb} incomesDb={incomesDb} />
+        <div className="flex flex-col justify-center items-center">
+            <MonthResume expensesDb={expensesDb}/>
+            <OverviewCard expensesDb={expensesDb} incomesDb={incomesDb} />
+            <LastExpenses expensesDb={expensesDb} />
+            <LastIncome incomesDb={incomesDb} />
+        </div>
+      </main>
+    </Suspense>
   )
 }
