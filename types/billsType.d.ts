@@ -11,3 +11,12 @@ export type BillType = {
   installment: number;
   totalInstallments: number;
 }
+
+export type CreateBillType = {
+  description: string;
+  amount: number;
+  fixed: boolean;
+  userId: string;
+  createdAt: string;
+  totalInstallments: number;
+}
