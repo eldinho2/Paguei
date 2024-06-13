@@ -94,7 +94,7 @@ export function AddBillForm({bill}: FormInputProps) {
           <FormInputCalendar form={form} bill={bill} />
           <DialogClose asChild>
           <Button disabled={isSubmitDisabled} className="w-full" type="submit">
-            Submit
+            Adicionar
           </Button>
         </DialogClose>
       </form>
