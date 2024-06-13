@@ -5,14 +5,15 @@ import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { JwtIsExpired } from "@/utils/jwt-is-expired";
+import { BillType } from '@/types/billsType'
 
   type CreateExpenseProps = {
-    createdAt: string;
-    totalInstallments: number;
     amount: number;
     description: string;
     fixed: boolean;
     userId: string;
+    createdAt: string;
+    totalInstallments: number;
   };
 
 async function CreateExpense(
@@ -47,9 +48,9 @@ async function CreateExpense(
     )
 
     if (response.data) {
-      return response.data.result.id;
+      return response.data.result;
     } else {
-      throw new Error("Missing 'id' in the server response");
+      throw new Error("Missing server response");
     }
   } catch (error) {
     console.error(error);
@@ -79,10 +80,20 @@ export const useCreateExpense = () => {
   const { mutateAsync: addExpense } = useMutation({
     mutationFn: (variables: CreateExpenseProps) => CreateExpense(newToken!, variables),
     onSuccess: (data, variables) => {
+      console.log(data);
 
-      const addedExpense = {
-        ...variables,
-        id: data,
+      const addedExpense: BillType = {
+        id: data.id,
+        groupId: data.groupId,
+        amount: variables.amount,
+        description: variables.description,
+        fixed: variables.fixed,
+        userId: variables.userId,
+        createdAt: variables.createdAt,
+        expiresAt: data.expiresAt,
+        totalInstallments: variables.totalInstallments,
+        updatedAt: data.updatedAt,
+        installment: data.installment,
       }
 
       const selectedMonth = new Date(variables.createdAt?.toString()).getMonth() + 1;

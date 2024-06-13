@@ -33,7 +33,7 @@ const FormSchema = z.object({
     .min(1, { message: "O valor deve ser maior que 0" })
     .positive({ message: "O valor deve ser maior que 0" }),
   fixed: z.boolean(),
-  installments: z.number()
+  totalInstallments: z.number()
   .min(1, { message: "A parcela deve ser maior que 1" })
   .nonnegative({ message: "O valor deve ser maior ou igual a 0" }),
   createdAt: z.string(),
@@ -57,7 +57,7 @@ export function AddBillForm({bill}: FormInputProps) {
       description: "",
       amount: 0,
       fixed: false,
-      installments: 1,
+      totalInstallments: 1,
       createdAt: new Date().toISOString(),
       userId: userEmail,
     },
@@ -78,10 +78,10 @@ export function AddBillForm({bill}: FormInputProps) {
 
   const fixed = form.watch("fixed");
   const amount = form.watch("amount");
-  const isSubmitDisabled = !!form.formState.errors.installments?.message || !amount || amount < 0;
+  const isSubmitDisabled = !!form.formState.errors.totalInstallments?.message || !amount || amount < 0;
 
   if (!parcelaFormIsOpen) {
-    form.setValue("installments", 1);
+    form.setValue("totalInstallments", 1);
   }
 
   return (

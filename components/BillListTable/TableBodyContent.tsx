@@ -62,8 +62,6 @@ export function TableBodyContent<TData, TValue>({
                     className="p-2 max-w-28 truncate"
                     key={cell.id}
                     onClick={() => {
-                      console.log(cell.getContext().row.original);
-
                       table.options?.meta?.handleDropdownItemClick?.(cell.getContext().row.original);
                     }}
                   >

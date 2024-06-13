@@ -8,22 +8,12 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
-
-type Bill = {
-  id: string;
-  description: string;
-  amount: number;
-  fixed: boolean;
-  createdAt: string;
-  expiresAt: string;
-  updatedAt: string;
-  installments: number;
-};
+import { BillType } from '@/types/billsType';
 
 type BillsDetailsDialogProps = {
   open: boolean;
   setOpen: (value: boolean) => void;
-  bill: Bill;
+  bill: BillType;
   table: any;
 };
 
@@ -33,8 +23,8 @@ export function BillsDetailsDialog({
   bill,
   table,
 }: BillsDetailsDialogProps) {
-  const fullAmountValue = bill.amount * bill.installments;
-
+  const fullAmountValue = bill.amount * bill.totalInstallments;
+  
   return (
     <div>
       <Dialog open={open} onOpenChange={(value) => setOpen(value)}>
@@ -52,7 +42,7 @@ export function BillsDetailsDialog({
                 {bill.description || "Sem descrição"}
               </p>
               <p className="text-sm">
-              {bill.installments > 1 && (
+              {bill.totalInstallments > 1 && (
                 <p className="text-sm pb-2">
                 <span className="font-semibold">Valor Total: {fullAmountValue.toLocaleString("pt-BR", {
                   style: "currency",
@@ -60,15 +50,15 @@ export function BillsDetailsDialog({
                 })}</span>
                 </p>
               )}
-                <span className="font-semibold">{bill.installments > 1 ? 'Valor da parcela ' : 'Valor '}</span>
+                <span className="font-semibold">{bill.totalInstallments > 1 ? 'Valor da parcela ' : 'Valor '}</span>
                 {bill.amount?.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
               </p>
-              {bill.installments > 1 && (
+              {bill.totalInstallments > 1 && (
                 <p className="text-sm">
-                  <span className="font-semibold">Parcelas: {bill.installments}</span>
+                  <span className="font-semibold">Parcelas: {bill.totalInstallments}</span>
                 </p>
               )}
               <p className="text-sm">
@@ -91,7 +81,7 @@ export function BillsDetailsDialog({
           <DialogClose>
             <Button
               variant="destructive"
-              onClick={() => table.options?.meta?.handleDeleteBill?.(table.options?.meta?.billType, bill.id)}
+              onClick={() => table.options?.meta?.handleDeleteBill?.(table.options?.meta?.billType, bill.id, bill.groupId, bill.totalInstallments)}
               
             >
               Excluir

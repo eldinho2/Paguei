@@ -9,18 +9,22 @@ import { useSelectedMonth } from '@/stores/selectedMonth-store';
 import { useSelectedYear } from "@/stores/selectedYear-store";
 
 type DeleteIncomeProps = {
-  id : string;
-};
+    id : string;
+    groupId: string;
+    totalInstallments: number;
+  };
 
 
-async function DeleteIncome( newToken: string, { id }: DeleteIncomeProps) {
+async function DeleteIncome( newToken: string, { id, groupId, totalInstallments }: DeleteIncomeProps) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${newToken}`,
   };
-
+    
   const data = {
-    id
+    id,
+    groupId,
+    totalInstallments
   }
   
 

@@ -10,17 +10,21 @@ import { useSelectedYear } from "@/stores/selectedYear-store";
 
 type DeleteExpenseProps = {
   id : string;
+  groupId: string;
+  totalInstallments: number;
 };
 
 
-async function DeleteExpense( newToken: string, { id }: DeleteExpenseProps) {
+async function DeleteExpense( newToken: string, { id, groupId, totalInstallments }: DeleteExpenseProps) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${newToken}`,
   };
-
+    
   const data = {
-    id
+    id,
+    groupId,
+    totalInstallments
   }
   
 

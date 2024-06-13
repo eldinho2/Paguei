@@ -19,19 +19,13 @@ import { useGetIncomesByMonth } from "@/utils/queries/get-incomes-by-month";
 import { useDeleteExpense } from "@/utils/queries/delete-expense";
 import { useDeleteIncome } from "@/utils/queries/delete-income";
 
-import { useUpdateExpense } from "@/utils/queries/update-expense";
-//import { useUpdateIncome } from "@/utils/queries/update-income";
-
 import { columns } from "./TableColumns";
 import { BillsDetailsDialog } from "./BillDetailsDialog";
 
-import { TypeBill } from "./TableColumns";
+import { BillType } from '@/types/billsType';
 import { TableBodyContent } from "./TableBodyContent";
 import { TablePagination } from "./TablePagination";
 import { TableFilterColumns } from "./TableFilterColumns";
-import { useSelectedMonth } from "@/stores/selectedMonth-store";
-
-import { useLiveQuery } from "dexie-react-hooks";
 
 import { useEffect } from 'react';
 
@@ -42,18 +36,18 @@ type BillListTableProps = {
 declare module "@tanstack/table-core" {
   interface TableMeta<TData extends RowData> {
     billType: "expense" | "income";
-    handleDeleteBill: (billType: string, id: string) => void;
-    handleDropdownItemClick: (payment: TypeBill) => void;
+    handleDeleteBill: (billType: string, id: string, groupId: string, totalInstallments: number) => void;
+    handleDropdownItemClick: (payment: BillType) => void;
     open: boolean;
     setOpen: (value: boolean) => void;
-    dialogContent: TypeBill;
-    setDialogContent: (value: TypeBill) => void;
+    dialogContent: BillType;
+    setDialogContent: (value: BillType) => void;
   }
 }
 
 export function ExpenseListTable({ bill }: BillListTableProps) {
   const [open, setOpen] = useState(false);
-  const [dialogContent, setDialogContent] = useState<TypeBill>({} as TypeBill);
+  const [dialogContent, setDialogContent] = useState<BillType>({} as BillType);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -79,11 +73,11 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
   const { deleteIncome } = useDeleteIncome();
 
 
-  const handleDeleteBill = (billType: string, id: string) => {
+  const handleDeleteBill = (billType: string, id: string, groupId: string, totalInstallments: number) => {
     if (billType === "expense") {
-      deleteExpense({ id });
+      deleteExpense({ id, groupId, totalInstallments });
     } else {
-      deleteIncome({ id });
+      deleteIncome({ id, groupId, totalInstallments});
     }
   };
 
@@ -98,7 +92,7 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
     }
   };
 
-  const handleDropdownItemClick = (payment: TypeBill) => {
+  const handleDropdownItemClick = (payment: BillType) => {
     table.options?.meta?.setDialogContent?.(payment);
     table.options?.meta?.setOpen?.(true);
   };
@@ -108,7 +102,7 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
     columns,
     meta: {
       billType: bill,
-      handleDeleteBill: (billType, id) => handleDeleteBill(billType, id),
+      handleDeleteBill: (billType, id, groupId, totalInstallments) => handleDeleteBill(billType, id, groupId, totalInstallments),
       handleUpdateBill: (billType, id) => handleUpdateBill(billType, id),
       handleDropdownItemClick: (payment) => handleDropdownItemClick(payment),
       open,

@@ -1,5 +1,4 @@
 import {
-  Form,
   FormControl,
   FormField,
   FormItem,
@@ -14,10 +13,10 @@ export const FormInputInstallments = ({form}: FormInputProps) => {
   return (
     <FormField
     control={form.control}
-    name="installments"
+    name="totalInstallments"
     render={({ field }) => (
       <FormItem>
-        <FormLabel htmlFor="installments">Parcelas</FormLabel>
+        <FormLabel htmlFor="totalInstallments">Parcelas</FormLabel>
         <FormControl>
           <Input
             type="number"
@@ -30,7 +29,7 @@ export const FormInputInstallments = ({form}: FormInputProps) => {
           />
         </FormControl>
         <FormMessage>
-          {form.formState.errors.installments?.message}
+          {form.formState.errors.totalInstallments?.message}
         </FormMessage>
       </FormItem>
   )}

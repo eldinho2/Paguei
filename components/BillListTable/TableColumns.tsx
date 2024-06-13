@@ -1,49 +1,28 @@
 import {
   CaretSortIcon,
-  DotsHorizontalIcon,
 } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   RowData,
 } from "@tanstack/react-table";
 
-
+import { BillType } from '@/types/billsType';
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-
-export type TypeBill = {
-  id: string;
-  amount: number;
-  description: string;
-  fixed: boolean;
-  userId: string;
-  createdAt: string;
-  expiresAt: string;
-  updatedAt: string;
-  installments: number;
-};
 
 declare module "@tanstack/table-core" {
   interface TableMeta<TData extends RowData> {
     billType: "expense" | "income";
-    handleDeleteBill: (billType: string, id: string) => void;
+    handleDeleteBill: (billType: string, id: string, groupId: string, totalInstallments: number) => void;
     handleUpdateBill: (billType: string, id: string) => void;
-    handleDropdownItemClick: (payment: TypeBill) => void;
+    handleDropdownItemClick: (payment: BillType) => void;
     open: boolean;
     setOpen: (value: boolean) => void;
-    dialogContent: TypeBill;
-    setDialogContent: (value: TypeBill) => void;
+    dialogContent: BillType;
+    setDialogContent: (value: BillType) => void;
   }
 }
 
-export const columns: ColumnDef<TypeBill>[] = [
+export const columns: ColumnDef<BillType>[] = [
   {
     accessorKey: "fixed",
     header: ({ column }) => {
