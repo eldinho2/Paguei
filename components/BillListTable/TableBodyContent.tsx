@@ -7,8 +7,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useState } from "react";
-
 import {
   ColumnDef,
   flexRender,
@@ -23,11 +21,8 @@ interface DataTableProps<TData, TValue> {
 
 export function TableBodyContent<TData, TValue>({
   columns,
-  data,
   table
 }: DataTableProps<TData, TValue>) {
-  const [open, setOpen] = useState(false);
-
   return (
     <div className="rounded-md border w-[350px]">
       <Table>

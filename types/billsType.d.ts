@@ -2,6 +2,7 @@ export type BillType = {
   id: string;
   groupId: string;
   description: string;
+  isPaid: boolean;
   amount: number;
   fixed: boolean;
   userId: string;

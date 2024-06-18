@@ -42,7 +42,9 @@ export function TableFilterColumns({ table }:  any) {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {
+                      column.id === "isPaid" ? 'Pago' : column.id === "description" ? 'Descrição' : column.id === "amount" ? 'Valor': 'Data'
+                    }
                   </DropdownMenuCheckboxItem>
                 );
               })}

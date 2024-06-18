@@ -72,19 +72,32 @@ export const useDeleteIncome = () => {
   const { mutateAsync: deleteIncome } = useMutation({
     mutationFn: (variables: DeleteIncomeProps) => DeleteIncome(newToken || "", variables),
     onSuccess: (_, variables) => {
-      queryClient.setQueryData(['incomes-by-month', month, year], (old: any) => {
-        if (!old || old.length === 0) {
-          return [];
+      const startMonth = month;
+      const startYear = year;
+      
+      for (let i = 0; i < variables.totalInstallments; i++) {
+        let updateMonth = startMonth + i;
+        let updateYear = startYear;
+        
+        if (updateMonth > 12) {
+          updateYear += Math.floor((updateMonth - 1) / 12);
+          updateMonth = updateMonth % 12 || 12;
         }
-        return old.filter((expense: any) => expense.id !== variables.id)
-      })
-
+        
+        queryClient.setQueryData(['incomes-by-month', updateMonth, updateYear], (old: any) => {
+          if (!old || old.length === 0) {
+            return [];
+          }
+          return old.filter((income: any) => income.id !== variables.id);
+        });
+      }
+    
       queryClient.setQueryData(['incomes'], (old: any) => {
         if (!old || old.length === 0) {
           return [];
         }
-        return old.filter((expense: any) => expense.id !== variables.id)
-      })
+        return old.filter((income: any) => income.id !== variables.id);
+      });
     },
     onError: (error) => {
       console.error("Mutation error:", error);

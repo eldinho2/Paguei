@@ -1,19 +1,21 @@
-import {
-  CaretSortIcon,
-} from "@radix-ui/react-icons";
-import {
-  ColumnDef,
-  RowData,
-} from "@tanstack/react-table";
+import { CaretSortIcon } from "@radix-ui/react-icons";
+import { ColumnDef, RowData } from "@tanstack/react-table";
 
-import { BillType } from '@/types/billsType';
+import { BillType } from "@/types/billsType";
 import { Button } from "@/components/ui/button";
+import React from "react";
+
+import { TogglePaidStatus } from "@/components/TogglePaidStatus";
 
 declare module "@tanstack/table-core" {
   interface TableMeta<TData extends RowData> {
     billType: "expense" | "income";
-    handleDeleteBill: (billType: string, id: string, groupId: string, totalInstallments: number) => void;
-    handleUpdateBill: (billType: string, id: string) => void;
+    handleDeleteBill: (
+      billType: string,
+      id: string,
+      groupId: string,
+      totalInstallments: number
+    ) => void;
     handleDropdownItemClick: (payment: BillType) => void;
     open: boolean;
     setOpen: (value: boolean) => void;
@@ -24,22 +26,30 @@ declare module "@tanstack/table-core" {
 
 export const columns: ColumnDef<BillType>[] = [
   {
-    accessorKey: "fixed",
+    accessorKey: "isPaid",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="px-0 mx-0 overflow-hidden whitespace-nowrap text-left text-ellipsis"
+          className="w-10"
         >
-          Fixa
+          Pago
+          <CaretSortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => {
-      const value = row.getValue("fixed") ? "Sim" : "Não";
-      return <div className="capitalize px-0">{value}</div>;
-    },
+      cell: ({ row }) => {
+        const cellData = row.original;
+        
+        
+        return (
+          <TogglePaidStatus
+            id={cellData.id}
+            initialIsPaid={row.getValue("isPaid")}
+          />
+        );
+      },
   },
   {
     accessorKey: "description",
@@ -55,7 +65,9 @@ export const columns: ColumnDef<BillType>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="">{row.getValue("description") || `Sem Nome`}</div>,
+    cell: ({ row }) => (
+      <div className="">{row.getValue("description") || `Sem Nome`}</div>
+    ),
   },
   {
     accessorKey: "amount",

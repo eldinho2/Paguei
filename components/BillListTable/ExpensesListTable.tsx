@@ -81,17 +81,6 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
     }
   };
 
-  const handleUpdateBill = (billType: string, id: string) => {
-    if (billType === "expense") {
-      console.log("updateExpense", { id });
-      setUpdateIsOpen(true)
-      //updateExpense({ id });
-    } else {
-      console.log("updateIncome", { id });
-      // updateIncome({ id });
-    }
-  };
-
   const handleDropdownItemClick = (payment: BillType) => {
     table.options?.meta?.setDialogContent?.(payment);
     table.options?.meta?.setOpen?.(true);
@@ -103,7 +92,6 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
     meta: {
       billType: bill,
       handleDeleteBill: (billType, id, groupId, totalInstallments) => handleDeleteBill(billType, id, groupId, totalInstallments),
-      handleUpdateBill: (billType, id) => handleUpdateBill(billType, id),
       handleDropdownItemClick: (payment) => handleDropdownItemClick(payment),
       open,
       setOpen,

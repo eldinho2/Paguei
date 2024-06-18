@@ -45,7 +45,6 @@ async function DeleteExpense( newToken: string, { id, groupId, totalInstallments
 }
 
 export const useDeleteExpense = () => {
-  //const queryClient = useQueryClient();
   const month = useSelectedMonth((state) => state.month)
   const year = useSelectedYear((state) => state.year)
 
@@ -72,20 +71,33 @@ export const useDeleteExpense = () => {
 
   const { mutateAsync: deleteExpense } = useMutation({
     mutationFn: (variables: DeleteExpenseProps) => DeleteExpense(newToken || "", variables),
-    onSuccess: (_, variables) => {      
-      queryClient.setQueryData(['expenses-by-month', month, year], (old: any) => {
-        if (!old || old.length === 0) {
-          return [];
+    onSuccess: (_, variables) => {
+      const startMonth = month;
+      const startYear = year;
+      
+      for (let i = 0; i < variables.totalInstallments; i++) {
+        let updateMonth = startMonth + i;
+        let updateYear = startYear;
+        
+        if (updateMonth > 12) {
+          updateYear += Math.floor((updateMonth - 1) / 12);
+          updateMonth = updateMonth % 12 || 12;
         }
-        return old.filter((expense: any) => expense.id !== variables.id)
-      })
-
+        
+        queryClient.setQueryData(['expenses-by-month', updateMonth, updateYear], (old: any) => {
+          if (!old || old.length === 0) {
+            return [];
+          }
+          return old.filter((expense: any) => expense.id !== variables.id);
+        });
+      }
+    
       queryClient.setQueryData(['expenses'], (old: any) => {
         if (!old || old.length === 0) {
           return [];
         }
-        return old.filter((expense: any) => expense.id !== variables.id)
-      })
+        return old.filter((expense: any) => expense.id !== variables.id);
+      });
     },
     onError: (error) => {
       console.error("Mutation error:", error);

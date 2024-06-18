@@ -84,6 +84,7 @@ export const useCreateIncome = () => {
       const addedIncome: BillType = {
         id: data.id,
         groupId: data.groupId,
+        isPaid: false,
         amount: variables.amount,
         description: variables.description,
         fixed: variables.fixed,
@@ -103,10 +104,20 @@ export const useCreateIncome = () => {
           updateIncomeDataForMonth(queryClient, month, addedIncome);
         }
       } else {
-        updateIncomeDataForMonth(queryClient, selectedMonth, addedIncome);
+        for (let month = selectedMonth; month < selectedMonth + variables.totalInstallments; month++) {
+          let updateMonth = month;
+          let updateYear = year;
+    
+          if (updateMonth > 12) {
+            updateYear += Math.floor((updateMonth - 1) / 12);
+            updateMonth = updateMonth % 12 || 12;
+          }
+    
+          updateIncomeDataForMonth(queryClient, updateMonth, addedIncome, updateYear);
+        }
       }
 
-      function updateIncomeDataForMonth(queryClient: QueryClient, month: number, addedIncome: CreateIncomeProps) {
+      function updateIncomeDataForMonth(queryClient: QueryClient, month: number, addedIncome: CreateIncomeProps, updateYear?: number) {
         queryClient.setQueryData(['incomes-by-month', month, year], (old: any) => {
           if (!old || old.length === 0) {
             return [addedIncome];

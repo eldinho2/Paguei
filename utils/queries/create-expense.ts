@@ -85,6 +85,7 @@ export const useCreateExpense = () => {
       const addedExpense: BillType = {
         id: data.id,
         groupId: data.groupId,
+        isPaid: false,
         amount: variables.amount,
         description: variables.description,
         fixed: variables.fixed,
@@ -101,13 +102,23 @@ export const useCreateExpense = () => {
 
       if (variables.fixed) {
         for (let month = 1; month <= 12; month++) {
-          updateIncomeDataForMonth(queryClient, month, addedExpense);
+          updateExpenseDataForMonth(queryClient, month, addedExpense);
         }
       } else {
-        updateIncomeDataForMonth(queryClient, selectedMonth, addedExpense);
+        for (let month = selectedMonth; month < selectedMonth + variables.totalInstallments; month++) {
+          let updateMonth = month;
+          let updateYear = year;
+    
+          if (updateMonth > 12) {
+            updateYear += Math.floor((updateMonth - 1) / 12);
+            updateMonth = updateMonth % 12 || 12;
+          }
+    
+          updateExpenseDataForMonth(queryClient, updateMonth, addedExpense, updateYear);
+        }
       }
 
-      function updateIncomeDataForMonth(queryClient: QueryClient, month: number, addedExpense: CreateExpenseProps) {
+      function updateExpenseDataForMonth(queryClient: QueryClient, month: number, addedExpense: CreateExpenseProps, updateYear?: number) {
         queryClient.setQueryData(['expenses-by-month', month, year], (old: any) => {
           if (!old || old.length === 0) {
             return [addedExpense];
