@@ -42,10 +42,10 @@ export const columns: ColumnDef<BillType>[] = [
       cell: ({ row }) => {
         const cellData = row.original;
         
-        
         return (
           <TogglePaidStatus
             id={cellData.id}
+            billType={cellData.billType}
             initialIsPaid={row.getValue("isPaid")}
           />
         );

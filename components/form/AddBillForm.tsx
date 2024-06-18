@@ -38,6 +38,7 @@ const FormSchema = z.object({
   .nonnegative({ message: "O valor deve ser maior ou igual a 0" }),
   createdAt: z.string(),
   userId: z.string(),
+  billType: z.string(),
 })
 
 
@@ -60,6 +61,7 @@ export function AddBillForm({bill}: FormInputProps) {
       totalInstallments: 1,
       createdAt: new Date().toISOString(),
       userId: userEmail,
+      billType: bill,
     },
   })
 
@@ -72,7 +74,6 @@ export function AddBillForm({bill}: FormInputProps) {
   }
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
     handleAddBIll(data);
   }
 

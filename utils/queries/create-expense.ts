@@ -14,11 +14,12 @@ import { BillType } from '@/types/billsType'
     userId: string;
     createdAt: string;
     totalInstallments: number;
+    billType: string;
   };
 
 async function CreateExpense(
   newToken: string,
-  { amount, description, fixed, userId, createdAt, totalInstallments }: CreateExpenseProps
+  { amount, description, fixed, userId, createdAt, totalInstallments, billType }: CreateExpenseProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -28,6 +29,7 @@ async function CreateExpense(
   const data: Record<string, any> = {
     amount,
     isPaid: false,
+    billType,
     description,
     fixed,
     userId,
@@ -80,11 +82,10 @@ export const useCreateExpense = () => {
   const { mutateAsync: addExpense } = useMutation({
     mutationFn: (variables: CreateExpenseProps) => CreateExpense(newToken!, variables),
     onSuccess: (data, variables) => {
-      console.log(data);
-
       const addedExpense: BillType = {
         id: data.id,
         groupId: data.groupId,
+        billType: data.billType,
         isPaid: false,
         amount: variables.amount,
         description: variables.description,

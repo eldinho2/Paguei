@@ -114,12 +114,6 @@ export function ExpenseListTable({ bill }: BillListTableProps) {
     },
   });
 
-  if (updateIsOpen) {
-    console.log('edit');
-    
-  }
-
-
   const [showSpinner, setShowSpinner] = useState(true);
 
   useEffect(() => {

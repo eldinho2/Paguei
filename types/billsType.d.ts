@@ -1,6 +1,7 @@
 export type BillType = {
   id: string;
   groupId: string;
+  billType: string;
   description: string;
   isPaid: boolean;
   amount: number;

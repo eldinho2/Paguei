@@ -14,12 +14,13 @@ type CreateIncomeProps = {
   userId: string;
   createdAt: string;
   totalInstallments: number;
+  billType: string;
 };
 
 
 async function CreateIncome(
   newToken: string,
-  { amount, description, fixed, userId, createdAt, totalInstallments }: CreateIncomeProps
+  { amount, description, fixed, userId, createdAt, totalInstallments, billType }: CreateIncomeProps
 ) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -29,6 +30,7 @@ async function CreateIncome(
   const data: Record<string, any> = {
     amount,
     isPaid: false,
+    billType,
     description,
     fixed,
     userId,
@@ -84,6 +86,7 @@ export const useCreateIncome = () => {
       const addedIncome: BillType = {
         id: data.id,
         groupId: data.groupId,
+        billType: data.billType,
         isPaid: false,
         amount: variables.amount,
         description: variables.description,

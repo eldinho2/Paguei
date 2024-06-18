@@ -23,10 +23,7 @@ export function BillsDetailsDialog({
   bill,
   table,
 }: BillsDetailsDialogProps) {
-  const fullAmountValue = bill.amount * bill.totalInstallments;
-
-  //console.log(bill);
-  
+  const fullAmountValue = bill.amount * bill.totalInstallments;  
   return (
     <div>
       <Dialog open={open} onOpenChange={(value) => setOpen(value)}>
