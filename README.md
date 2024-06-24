@@ -22,15 +22,15 @@ git clone https://github.com/eldinho2/Paguei.git
 
 2. Navegue até o diretório do projeto:
 
-cd Paguei
+`cd Paguei`
 
 3. Instale as dependências:
 
-npm install
+`npm install`
 
 4. Inicie o servidor de desenvolvimento:
 
-npm run dev
+`npm run dev`
 
 5. Abra [http://localhost:3000](http://localhost:3000) no seu navegador para visualizar a aplicação.
 
