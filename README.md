@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Paguei 💸
 
-## Getting Started
+Paguei é uma aplicação web desenvolvida em React com Next.js, projetada para ajudar no gerenciamento de despesas pessoais. Esta aplicação permite que os usuários registrem suas despesas, visualizem um resumo dos gastos e analisem seus hábitos financeiros ao longo do tempo.
 
-First, run the development server:
+## Funcionalidades 📋
 
-```bash
+- **Registro de Despesas:** Os usuários podem adicionar novas despesas especificando o valor, a categoria e a data.
+  
+- **Visão Geral de Despesas:** Exibe um resumo das despesas totais e detalha as despesas por categoria.
+
+- **Análise de Tendências:** Gráficos e estatísticas ajudam os usuários a entender melhor seus padrões de gastos.
+
+## Instalação 🚀
+
+Para executar este projeto localmente, siga estas etapas:
+
+1. Clone o repositório:
+
+git clone https://github.com/eldinho2/Paguei.git
+
+2. Navegue até o diretório do projeto:
+
+cd Paguei
+
+3. Instale as dependências:
+
+npm install
+
+4. Inicie o servidor de desenvolvimento:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Abra [http://localhost:3000](http://localhost:3000) no seu navegador para visualizar a aplicação.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tecnologias Utilizadas no Front 🛠️
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- React.js
+- Next.js
+- Chart.js
 
-## Learn More
+## Tecnologias Utilizadas no Back 🛠️
 
-To learn more about Next.js, take a look at the following resources:
+[Link pro repositorio back-end](https://github.com/eldinho2/Paguei-Back-End)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Nest.js
+- Prisma
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Contribuição 🤝
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir problemas (issues) e enviar pull requests para melhorar este projeto.
