@@ -1,8 +1,10 @@
 # Paguei 💸
 
-Paguei é uma aplicação web desenvolvida em React com Next.js, projetada para ajudar no gerenciamento de despesas pessoais. Esta aplicação permite que os usuários registrem suas despesas, visualizem um resumo dos gastos e analisem seus hábitos financeiros ao longo do tempo.
+Paguei é uma aplicação web desenvolvida em React com Next.js, projetada para ajudar no gerenciamento de despesas pessoais. Este aplicativo foi desenvolvido com um design focado em experiência móvel e possui suporte a Progressive Web App (PWA), proporcionando uma experiência integrada em dispositivos móveis.
 
 ## Funcionalidades 📋
+
+- **Instalável:** Este aplicativo foi desenvolvido com um design focado em experiência móvel e possui suporte a Progressive Web App (PWA), proporcionando uma experiência integrada em dispositivos móveis.
 
 - **Registro de Despesas:** Os usuários podem adicionar novas despesas especificando o valor, a categoria e a data.
   
@@ -34,6 +36,7 @@ npm run dev
 
 ## Tecnologias Utilizadas no Front 🛠️
 
+- Next-PWA
 - React.js
 - Next.js
 - Chart.js
